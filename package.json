@@ -1,0 +1,17 @@
+{
+  "name": "hacktoberfest-2026",
+  "version": "1.0.0",
+  "description": "A consolidated talent, project, funding, and opportunity portal",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check app.js && node --check server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  }
+}

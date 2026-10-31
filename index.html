@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#153f36">
+    <title>Talent Commons — Find your next possibility</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Talent Commons home"><span class="brand-mark" aria-hidden="true">✳</span> Talent Commons</a>
+      <a href="#directory">Explore the commons <span aria-hidden="true">↗</span></a>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <p class="eyebrow">GOOD PEOPLE. BIG POSSIBILITIES.</p>
+          <h1 id="hero-title">Great things start<br>with a <em>connection.</em></h1>
+          <p class="hero-copy">Discover talent, meet companies, build projects, and find the funding and opportunities that move ideas forward. All in one commons.</p>
+          <a class="button primary" href="#directory">Find your next possibility <span aria-hidden="true">↓</span></a>
+        </div>
+        <aside class="hero-note">
+          <span class="note-icon" aria-hidden="true">✳</span>
+          <h2>More than a job board.</h2>
+          <p>A space for people, organizations, and ideas to find each other.</p>
+          <div class="note-tags"><span>People</span><span>Ideas</span><span>Resources</span></div>
+        </aside>
+      </section>
+      <section id="directory" aria-labelledby="directory-title">
+        <div class="section-heading">
+          <div><p class="eyebrow">THE DIRECTORY</p><h2 id="directory-title">Explore what’s possible</h2></div>
+          <button id="add-listing" class="button primary" type="button">+ Add a listing</button>
+        </div>
+        <div class="toolbar">
+          <label class="search-box"><span aria-hidden="true">⌕</span><span class="sr-only">Search listings</span><input id="search" type="search" placeholder="Search names, skills, topics, or locations…" maxlength="200"></label>
+          <label class="location-filter">Location<select id="location"><option value="">All locations</option></select></label>
+        </div>
+        <div id="type-filters" class="type-filters" role="group" aria-label="Filter by listing type"></div>
+        <div class="results-heading"><p id="result-count" role="status"></p><span>Explore · Connect · Create</span></div>
+        <p id="notice" role="status" class="notice"></p>
+        <div id="listings" class="listing-grid"></div>
+        <div id="empty-state" class="empty-state" hidden><h3>No connections found yet</h3><p>Try another search or share a new listing with the commons.</p><button id="clear-filters" class="button secondary" type="button">Clear filters</button></div>
+      </section>
+      <section class="callout"><h2>One commons. Endless possibilities.</h2><p>Whether you’re sharing your skills, starting something new, or backing a good idea — there’s a place for you here.</p></section>
+    </main>
+    <footer><span class="brand">✳ Talent Commons</span><p>Prototype · Sample listings · Your additions are saved only in this browser.</p></footer>
+    <dialog id="listing-dialog" aria-labelledby="form-title">
+      <form id="listing-form">
+        <div class="dialog-heading"><h2 id="form-title">Share a possibility</h2><button class="close-button" type="button" data-close="listing-dialog" aria-label="Close form">×</button></div>
+        <p class="muted">Add a person, organization, idea, resource, or opportunity. Listings stay in this browser; they are not published online.</p>
+        <label>Listing type<select id="listing-type" name="type" required></select></label>
+        <label>Name or title<input name="title" required maxlength="100" placeholder="What would you like to share?"></label>
+        <label>Description<textarea name="description" required maxlength="1200" rows="4" placeholder="Tell people what you do, offer, or are looking for."></textarea></label>
+        <label>Location<input name="location" required maxlength="80" placeholder="Remote, London, Global…"></label>
+        <label>Tags <span class="muted">(comma-separated, up to 6)</span><input name="tags" maxlength="200" placeholder="Climate, Design, Open source"></label>
+        <label>Website <span class="muted">(optional)</span><input name="url" type="url" maxlength="500" placeholder="https://example.com"></label>
+        <label>Related listing <span class="muted">(optional)</span><select id="related-listing" name="relatedId"><option value="">No related listing</option></select></label>
+        <p class="muted">Connect an opportunity to any listing — including a project or funding program.</p>
+        <p id="form-error" role="alert"></p>
+        <div class="dialog-actions"><button class="button secondary" type="button" data-close="listing-dialog">Cancel</button><button class="button primary" type="submit">Add listing</button></div>
+      </form>
+    </dialog>
+    <dialog id="detail-dialog" aria-labelledby="detail-title">
+      <div class="dialog-heading"><h2 id="detail-title"></h2><button class="close-button" type="button" data-close="detail-dialog" aria-label="Close details">×</button></div>
+      <div id="detail-content"></div>
+    </dialog>
+    <noscript><p class="notice">Please enable JavaScript to explore and add listings.</p></noscript>
+  </body>
+</html>
