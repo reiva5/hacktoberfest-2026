@@ -67,6 +67,36 @@ Offline seed configuration checks: `python -m pytest -q tests/test_sources.py`.
 Before model ingestion, start with one detail page:
 `python -m gateway ingest https://cradle.com.my/cip-spark/`.
 
+## Cached demo and extraction checks
+
+`python -m gateway crawl --cached` reads only saved HTML; a missing or corrupt cache
+entry is an explicit error, not a live-fetch fallback. Crawl and ingest exit nonzero
+when a source or followed page fails. New cache entries preserve the final redirected
+URL and fetch timestamp alongside the HTML; existing HTML-only entries remain readable.
+
+For a fully offline replay with **no model calls**, use the same database and cache as
+the successful extraction, and do not pass `--force`. Unchanged cleaned text skips
+extraction. Changed or previously unprocessed cached pages still need Gemma;
+`ingest --cached` deliberately re-extracts. Keep the DB/cache in ignored `data/`, and
+export real records to a local or session-artifact path, never to committed fixtures.
+
+Check eligibility, funding terms and application dates against the source before the
+demo. Unknown countries/stages are not evidence of eligibility; a missing deadline is
+not proof that applications are open. The current API's `is_open` treats a missing
+deadline as open, so distinguish this computed count from manually confirmed open
+calls when reporting crawl results. A newer organiser copy replaces older eligibility
+and funding claims instead of unioning them into broader eligibility.
+
+The 31 Oct P0 run reused Ollama and measured the first real CIP Spark ingest at
+80.91 seconds with `gemma3:4b` on CPU. A `gemma3:12b` rerun using cached HTML took
+207.74 seconds. The remaining crawl and ten-record audit were paused at the
+user's request before their targets were met: 26 public page snapshots were
+cached, but only 10 seed sources were processed, producing 19 **raw, unreviewed**
+rows. Every stored row lacks an exact deadline; the API therefore computes all
+19 as open, which is **not** a verified open-call count. Local exports and source
+snapshots are session artifacts, not committed data. Do not use this partial
+dataset to claim demo coverage or extraction accuracy.
+
 ## Gemma options
 
 Any OpenAI-compatible server works; set `LLM_BASE_URL` and `LLM_MODEL` in `.env`.
