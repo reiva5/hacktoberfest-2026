@@ -5,33 +5,54 @@
 #   regional     one program across several ASEAN countries (tests duplicate handling)
 #   non-english  page in BM, Bahasa Indonesia, Vietnamese or Thai
 # Run `python -m gateway crawl` and check `python -m gateway sources` for dead links before the demo.
-# Swap any homepage for its programs or "apply" page once you've found it.
+# Seed programme directories or detail pages, not generic organisation homepages.
+# Reviewed 31 Oct 2026 with the honest crawler user agent. A reachable page does not
+# prove applications are open; use the published cohort dates and eligibility.
+# Install Playwright/Chromium for the JavaScript pages noted below.
 
 sources:
   # Malaysia
-  - {url: "https://www.mystartup.gov.my/", kind: portal, country: MY}
-  - {url: "https://www.cradle.com.my/", kind: portal, country: MY}
-  - {url: "https://mranti.my/", kind: portal, country: MY}
-  - {url: "https://mdec.my/", kind: portal, country: MY}
+  # MYStartup founder programme directory; requires JavaScript.
+  - {url: "https://www.mystartup.gov.my/programmes/founder", kind: portal, country: MY}
+  # Cradle's individual grant pages include funding, eligibility and application instructions.
+  - {url: "https://cradle.com.my/cip-spark/", kind: program, country: MY}
+  - {url: "https://cradle.com.my/cip-sprint/", kind: program, country: MY}
+  # GAP page currently describes the 2025 cohort, not a confirmed open 2026 call.
+  - {url: "https://mranti.my/innovators/grow/gap", kind: program, country: MY}
+  # Digital Content Grant directory; requires JavaScript. Detailed eligibility is in linked PDFs.
+  - {url: "https://www.mdec.my/grants/dcg", kind: portal, country: MY}
 
   # Singapore
-  - {url: "https://www.startupsg.gov.sg/programmes/", kind: portal, country: SG}
-  - {url: "https://www.sginnovate.com/", kind: portal, country: SG}
+  # Includes grant caps and incorporation, ownership and project criteria; requires JavaScript.
+  - {url: "https://www.startupsg.gov.sg/programmes/4897/startup-sg-tech/eligibility", kind: program, country: SG}
+  # SGInnovate's public call-for-applications directory; requires JavaScript.
+  - {url: "https://central.sginnovate.com/hub/opportunities?types=e0ed5361-bd95-47ba-a12a-ba44cccb8c64", kind: portal, country: SG}
+  # Residency terms and founder requirements are richer than the generic pitch form.
+  - {url: "https://www.antler.co/location/singapore", kind: program, country: SG}
 
   # Regional / single programs
   - {url: "https://startup.google.com/programs/accelerator/southeast-asia/", kind: program, country: ASEAN}
-  - {url: "https://www.antler.co/pitch", kind: regional, country: ASEAN}
-  - {url: "https://ventures.adb.org/", kind: program, country: ASEAN}
-  - {url: "https://www.youthcolab.org/", kind: regional, country: ASEAN}
-  - {url: "https://aws.amazon.com/startups/credits", kind: program, country: GLOBAL}
+  - {url: "https://ventures.adb.org/nextfin-asia/", kind: regional, country: ASEAN}
+  # Springboard offers support and investor access, not a guaranteed cash grant.
+  - {url: "https://www.youthcolab.org/springboard", kind: regional, country: ASEAN}
+  - {url: "https://aws.amazon.com/startups/credits/", kind: program, country: GLOBAL}
 
   # Other ASEAN countries
-  - {url: "https://www.nia.or.th/", kind: portal, country: TH}
-  - {url: "https://nic.gov.vn/", kind: non-english, country: VN}
-  - {url: "https://www.qboinnovation.com/", kind: portal, country: PH}
-  - {url: "https://tsc.gov.kh/", kind: non-english, country: KH}
+  # Thai-language grant mechanisms, funding limits and application guidance.
+  - {url: "https://www.nia.or.th/service/financial-support", kind: non-english, country: TH}
+  # QBO's women-founder programme; no fixed cash award is stated.
+  - {url: "https://www.qboinnovation.com/startup-pinay", kind: program, country: PH}
+
+  # Deferred, not active seeds:
+  # NIC's homepage has no extracted text. Its verified Vietnamese programme page
+  # https://vic.nic.gov.vn/2024-vi is an archived 2024 call; find a current call first.
+  # Techo's homepage links to https://dpa.techostartup.center and
+  # https://ri.techostartup.center, but both return HTTP 403. Do not bypass the block.
 
   # Aggregators
   # e27 answers our crawler with HTTP 403. Respect that: don't fake a browser user agent.
   # - {url: "https://e27.co/events/", kind: aggregator, country: ASEAN}
+  # F6S's https://www.f6s.com/programs/malaysia also returns HTTP 403; keep it disabled.
+  # Devpost's static response contains navigation rather than call details.
+  # Retained existing discovery seed; confirm listing content before using it in the demo.
   - {url: "https://devpost.com/hackathons?challenge_type[]=in-person&search=asia", kind: aggregator, country: ASEAN}

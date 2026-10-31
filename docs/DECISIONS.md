@@ -44,3 +44,7 @@ Newest last. Each entry records what we decided, why, and when to revisit it. Ag
 ### D13 · Gemma runs on the laptop CPU with Ollama · 31 Oct
 **Why:** No GPU is available: the laptop has a 16 GB i7-1185G7 with integrated graphics. Everything is pre-crawled and cached; only the paste-a-URL step runs live.
 **Revisit:** If someone offers GPU credits.
+
+### D14 · Programme pages, not organisation homepages, are crawl seeds · 31 Oct
+**Why:** Programme directories and detail pages give extraction funding and eligibility context instead of generic organisation descriptions. The reviewed URLs, JavaScript requirements, older cohorts and access limits are recorded in `sources.yaml` and the README. NIC's archived 2024 call is deferred until a current call is found; Techo's linked accelerator sites and F6S return 403 and are not enabled. No crawler or contract changes are needed.
+**Revisit:** Before the real crawl, confirm cohort dates and Devpost listing content, and find accessible current Vietnam and Cambodia programme pages without bypassing blocks.
