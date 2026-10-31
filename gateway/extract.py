@@ -12,10 +12,16 @@ Rules:
 - Only use facts stated on the page. Never guess amounts, dates or eligibility.
 - Write every text field in English, translating if the page is in another language.
 - If the page lists several programs, return each one separately (at most 25).
+- Do not turn navigation links, conferences, surveys, training for students, or benefits of a program into separate startup funding opportunities.
 - If the page is a news article, blog post, or general homepage with no program details, set is_program_page to false and return no programs.
 - countries: where applicants must be based. Use 'ASEAN' if open across Southeast Asia and 'GLOBAL' if open worldwide.
-- deadline: the application closing date as YYYY-MM-DD. Resolve relative dates using today's date. If the year is missing, assume the next occurrence.
-- program_url: copy the link to the program's own page or application form if it appears in the text."""
+- Never infer eligible countries from this directory's ASEAN focus, the organiser's location, or the page URL. A Malaysian residence requirement means Malaysia, not all ASEAN countries. Leave countries empty if no applicant location is stated.
+- stages: use only stages stated or clearly described: ideation = idea, pre-seed = pre-seed, seed = seed, Series A/B and later = series-a+. Do not add seed just because a program supports early-stage entrepreneurs.
+- funding: distinguish the grant or investment cap from project cost, revenue limits, paid-up capital, perks and later follow-on investment. Never infer equity-free from the word 'grant', 'free participation', or revenue sharing. A conditional share-subscription right is not a fixed equity percentage.
+- deadline: only the application closing date as YYYY-MM-DD, never event, bootcamp or graduation dates. Resolve relative dates using today's date and an explicit cohort year where supplied. If the exact date or year cannot be established, leave deadline null and describe the published period in eligibility. Never invent a day for a month-only closing period or move a past cohort into the future.
+- rolling: true only if ongoing or rolling applications are explicitly stated, not merely because no deadline is listed.
+- program_url: copy an observed link to this specific program's own detail page; prefer it over a shared application portal. If no detail link is supplied, use the Page URL. Never construct a URL from the title.
+- Keep conditional funding, residency, incorporation and published application-period restrictions in eligibility even when a structured field cannot express them."""
 
 _COUNTRY_ALIASES = {name.lower(): code for code, name in ASEAN.items()} | {
     "viet nam": "VN", "lao pdr": "LA", "burma": "MM", "brunei darussalam": "BN",
@@ -53,7 +59,8 @@ def is_aggregator(url: str) -> bool:
 
 def extract(page: CleanPage, url: str, *, today: date | None = None) -> list[Program]:
     today = today or date.today()
-    user = f"Today's date: {today.isoformat()}\nPage URL: {url}\nPage title: {page.title}\n\nPage content (markdown):\n{page.text}"
+    links = "\n".join(f"{anchor}: {link}" for link, anchor in page.links)
+    user = f"Today's date: {today.isoformat()}\nPage URL: {url}\nPage title: {page.title}\n\nPage content (markdown):\n{page.text}\n\nObserved page links (navigation is not evidence of a program):\n{links}"
     result = llm.chat_json(SYSTEM, user, PageExtraction)
     if not result.is_program_page:
         return []

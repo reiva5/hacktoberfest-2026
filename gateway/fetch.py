@@ -1,5 +1,6 @@
 """Polite fetching: robots.txt, a per-host delay, and an on-disk cache so the demo runs offline."""
 import hashlib
+import json
 import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -36,6 +37,17 @@ def _cache_path(url: str):
     return config.CACHE_DIR / (hashlib.sha1(url.encode()).hexdigest() + ".html")
 
 
+def _save_page(page: Page) -> None:
+    config.CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    cached = _cache_path(page.url)
+    cached.write_text(page.html, encoding="utf-8")
+    cached.with_suffix(".json").write_text(json.dumps({
+        "final_url": page.final_url,
+        "status": page.status,
+        "fetched_at": page.fetched_at.isoformat(),
+    }), encoding="utf-8")
+
+
 def allowed(url: str) -> bool:
     parts = urlparse(url)
     origin = f"{parts.scheme}://{parts.netloc}"
@@ -60,9 +72,25 @@ def _wait_for_host(host: str) -> None:
 
 def fetch(url: str, *, use_cache: bool = False) -> Page:
     cached = _cache_path(url)
-    if use_cache and cached.exists():
-        return Page(url, url, 200, cached.read_text(encoding="utf-8"),
-                    datetime.fromtimestamp(cached.stat().st_mtime, timezone.utc), from_cache=True)
+    if use_cache:
+        if not cached.exists():
+            raise FetchError(f"{url}: cache miss; run without --cached while online first")
+        metadata_path = cached.with_suffix(".json")
+        try:
+            final_url, status = url, 200
+            fetched_at = datetime.fromtimestamp(cached.stat().st_mtime, timezone.utc)
+            if metadata_path.exists():
+                metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+                if (not isinstance(metadata, dict) or not isinstance(metadata.get("final_url"), str)
+                        or type(metadata.get("status")) is not int
+                        or not isinstance(metadata.get("fetched_at"), str)):
+                    raise ValueError("invalid cache metadata")
+                final_url, status = metadata["final_url"], metadata["status"]
+                fetched_at = datetime.fromisoformat(metadata["fetched_at"])
+            return Page(url, final_url, status, cached.read_text(encoding="utf-8"),
+                        fetched_at, from_cache=True)
+        except (OSError, ValueError, TypeError) as e:
+            raise FetchError(f"{url}: cannot read cached page: {e}") from e
 
     if not allowed(url):
         raise FetchError(f"robots.txt disallows {url}")
@@ -75,9 +103,9 @@ def fetch(url: str, *, use_cache: bool = False) -> Page:
     if r.status_code >= 400:
         raise FetchError(f"{url}: HTTP {r.status_code}")
 
-    config.CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    cached.write_text(r.text, encoding="utf-8")
-    return Page(url, str(r.url), r.status_code, r.text, datetime.now(timezone.utc))
+    page = Page(url, str(r.url), r.status_code, r.text, datetime.now(timezone.utc))
+    _save_page(page)
+    return page
 
 
 def can_render() -> bool:
@@ -107,6 +135,6 @@ def render(url: str) -> Page:
         raise FetchError(f"{url}: render failed: {e}") from e
     if status >= 400:
         raise FetchError(f"{url}: HTTP {status}")
-    config.CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    _cache_path(url).write_text(html, encoding="utf-8")
-    return Page(url, final_url, status, html, datetime.now(timezone.utc))
+    page = Page(url, final_url, status, html, datetime.now(timezone.utc))
+    _save_page(page)
+    return page
