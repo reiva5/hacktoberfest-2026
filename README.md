@@ -116,6 +116,38 @@ sources, with seven sources still failing and Devpost returning no programs.
 This is a separate, local dataset and still requires factual spot-checking.
 The historical Gemma 3 results do not validate the current Gemma 4 integration.
 
+### Combining a real export with sample programs
+
+A database merge is local, not a Git change. Keep real JSON exports, SQLite
+databases and backups outside tracked files; a PR can document the operation
+but must not contain the crawl itself. The UI continues to read only the HTTP API.
+
+1. Identify the database used by the running API, including its working directory
+   and `gateway.config.DB_PATH`. Different worktrees can serve different databases.
+2. Select the intended export explicitly. Validate the complete JSON array with
+   `Program.model_validate` from `gateway.schema` before writing any rows.
+   Preserve each record's `source_url`, `last_verified`, issues and confidence;
+   importing an export is not a fresh crawl or factual verification.
+3. Back up the target with SQLite's `Connection.backup` into a separate local
+   database. Use `gateway.store.upsert_program` for every validated record so the
+   existing duplicate detection and authoritative merge rules apply. Do not clear
+   the target or reload sample fixtures: that would remove or refresh existing data.
+   Upserts commit individually; if an import fails, stop and restore the backup
+   with the API stopped before retrying.
+4. Verify `GET /programs?open_only=false`: compare all original sample records,
+   check the imported source URLs, and record total/sample/real counts. Keep samples
+   visibly labelled and describe raw crawl rows as unreviewed. Mixed totals from
+   `/stats` and `/gapmap` are not real-only coverage or verified open-call counts.
+5. Check the public preview as well as localhost. A public UI must reach the
+   intended API; a visitor's `localhost:8000` is not the demo machine's API.
+
+The 31 Oct local preview merge combined the historical 19-row export with eight
+existing samples: HTTP verification found **27 records, eight sample and 19 real**,
+with the samples preserved. The real rows remain unreviewed and have no exact
+deadlines. This merge did **not** import the separate newer 22-row hosted Gemma 4
+dataset described above, and it does not establish that the latest crawl is served.
+The mixed-data banner and public-preview routing need to be checked separately.
+
 ## Gemma options
 
 Only Gemma 4 is allowed, including discovery and deck processing. Older Gemma and

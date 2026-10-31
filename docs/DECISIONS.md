@@ -77,3 +77,7 @@ Newest last. Each entry records what we decided, why, and when to revisit it. Ag
 **Revisit:** If API quota or availability prevents a crawl, use a self-hosted Gemma 4 endpoint; do not fall back to Gemini or another model family.
 
 Transient Gemini API HTTP 500/502/503/504 responses are retried once after two seconds with the same model. Persistent failures remain explicit; authentication and quota failures are not retried. The live crawl also tried the other allowed hosted Gemma 4 model for failed sources without changing the default configuration.
+
+### D22 · Merge selected crawl data into the local sample preview, not Git · 31 Oct
+**Why:** The user requested real crawl rows alongside the existing samples. The selected historical export was validated and merged through the existing store/deduplication helpers after backing up the live database. HTTP verification found eight preserved sample records and 19 raw real rows. Export timestamps and validation issues are retained; this is not a new crawl, a factual audit or an import of the separate newer 22-row Gemma 4 dataset. Only the merge procedure is committed; real exports, databases and backups remain local.
+**Revisit:** Before presenting the public demo, verify its API routing and mixed-data labels. For a real-only coverage claim, exclude samples and complete the source-page audit.
