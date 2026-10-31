@@ -15,6 +15,10 @@ def _print_result(r: pipeline.IngestResult, indent: str = "") -> None:
         _print_result(f, indent + "  -> ")
 
 
+def _has_error(r: pipeline.IngestResult) -> bool:
+    return r.status == "error" or any(_has_error(f) for f in r.followed)
+
+
 def _print_matches(profile: Profile, programs) -> None:
     results = match(profile, programs)
     print(f"\n{len(results)} programs for {profile.model_dump(exclude={'evidence'}, exclude_defaults=True)}\n")
@@ -80,14 +84,17 @@ def main(argv: list[str] | None = None) -> int:
     db = store.connect()
 
     if args.cmd == "crawl":
-        for r in pipeline.crawl(db, use_cache=args.cached, force=args.force, only=args.only):
+        results = pipeline.crawl(db, use_cache=args.cached, force=args.force, only=args.only)
+        for r in results:
             _print_result(r)
+        return int(any(_has_error(r) for r in results))
     elif args.cmd == "ingest":
         r = pipeline.ingest_url(db, args.url, use_cache=args.cached, force=True, follow=not args.no_follow)
         _print_result(r)
         for pid in r.new + r.updated:
             p = store.get_program(db, pid)
             print(json.dumps(json.loads(p.model_dump_json()), indent=2, ensure_ascii=False))
+        return int(_has_error(r))
     elif args.cmd == "discover":
         for link, anchor, status in pipeline.discover_from(db, args.url, check=args.check):
             print(f"  [{status}] {link}  ({anchor})")

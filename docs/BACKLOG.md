@@ -5,10 +5,10 @@ Owners follow the areas in [AGENTS.md](../AGENTS.md). Tick items off here, or mi
 
 ## Pipeline and data · @adhibskr (Claude Code)
 
-- [ ] **P0** Install Ollama, pull `gemma3:4b` (and `gemma3:12b` if it runs acceptably), run the first real `ingest`, and record the time per page.
+- [x] **P0** Install Ollama, pull `gemma3:4b` (and `gemma3:12b` if it runs acceptably), run the first real `ingest`, and record the time per page. Reused local Ollama on 31 Oct; real CIP Spark ingestion with 4B took 80.91 s on CPU. A 12B rerun using cached HTML took 207.74 s and corrected the country and equity-free claims, but stage errors remain. This is not a claim of audit readiness.
 - [x] **P0** Replace homepage seeds in `sources.yaml` with actual programs or apply pages. Reviewed 31 Oct: programme URLs and JavaScript requirements documented; NIC's archived call and blocked Techo links deferred (see README).
-- [ ] **P0** Crawl and cache 30–50 records; make sure `crawl --cached` works offline.
-- [ ] **P0** Spot-check 10 records against their source pages (target ≥ 85% of key fields correct).
+- [ ] **P0** Crawl and cache 30–50 records; make sure `crawl --cached` works offline. Paused at the user's request on 31 Oct to open the pipeline PR: 26 public pages cached, 10 seed sources processed, 19 raw extraction rows stored. Non-programme rows and unsupported fields remain; this is not a verified 30–50-record dataset.
+- [ ] **P0** Spot-check 10 records against their source pages (target ≥ 85% of key fields correct). Deferred with the remaining crawl. Initial 4B/12B spot-checks found eligibility, stage, equity-unit and programme-versus-benefit errors. The ten-record audit and ≥85% target are not complete; local exports and the explicit audit rubric are saved as session artifacts.
 - [ ] **P1** If CPU inference takes over 60 s, make `/ingest` and `/deck` return a job id and add `GET /jobs/{id}` (a `[contract]` PR).
 - [ ] **P1** Test `deck` on 2–3 real pitch decks; tune the prompt.
 - [ ] **P1** Pick and test the non-English demo page.
