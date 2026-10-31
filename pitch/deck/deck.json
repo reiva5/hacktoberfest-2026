@@ -1,0 +1,17 @@
+{
+  "v": 4,
+  "createdOnFiles": {"v": 1, "at": "2026-10-31T14:30:00Z"},
+  "lists": "css",
+  "title": "Startup ASEAN Gateway pitch",
+  "order": ["cover", "problem", "scope", "why", "gemma", "numbers", "demo", "gapmap", "next", "close", "how", "trust"],
+  "sections": {
+    "pitch": {"description": "The problem, the scope we chose and why.", "start": "cover"},
+    "proof": {"description": "What we found, the live demo and the gap map.", "start": "numbers"},
+    "ask": {"description": "Next phase and the pilot ask.", "start": "next"},
+    "appendix": {"description": "Backup slides for questions from the judges.", "start": "how"}
+  },
+  "faces": {
+    "manrope": {"family": "Manrope", "href": "https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&display=swap"}
+  },
+  "designSystems": []
+}
