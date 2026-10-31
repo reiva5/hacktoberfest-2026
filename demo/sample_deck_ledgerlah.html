@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sample LedgerLah pitch deck (fictional)</title>
+<style>
+  @page { size: 13.333in 7.5in; margin: 0; }
+  :root { --ink:#1b2340; --muted:#5a6280; --accent:#3a5bd9; --soft:#eaeefc; --warn:#b5651d; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: "Segoe UI", Arial, sans-serif; color: var(--ink); }
+  .slide { width:13.333in; height:7.5in; padding:0.75in 0.9in; position:relative; page-break-after:always; background:#fff; overflow:hidden; }
+  .slide:last-child { page-break-after:auto; }
+  .num { position:absolute; right:0.9in; bottom:0.4in; font-size:14px; color:var(--muted); }
+  .foot { position:absolute; left:0.9in; bottom:0.4in; font-size:14px; color:var(--warn); }
+  .kicker { text-transform:uppercase; letter-spacing:.12em; font-size:16px; color:var(--accent); font-weight:600; margin:0 0 12px; }
+  h1 { font-size:64px; margin:0 0 16px; line-height:1.05; }
+  h2 { font-size:44px; margin:0 0 28px; line-height:1.1; }
+  p, li { font-size:24px; line-height:1.45; }
+  ul { padding-left:1.1em; margin:0; } li { margin-bottom:10px; }
+  .cover { background: var(--ink); color:#fff; display:flex; flex-direction:column; justify-content:center; }
+  .cover .kicker { color:#a9b8f5; } .cover p { color:#d3daf3; font-size:28px; max-width:9in; } .cover .foot { color:#f0c08a; } .cover .num { color:#a2a9c4; }
+  .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:24px; }
+  .card { background:var(--soft); border-radius:14px; padding:24px 26px; }
+  .card b { display:block; font-size:44px; color:var(--accent); margin-bottom:6px; }
+  .card span { font-size:20px; color:var(--muted); }
+  .two { display:grid; grid-template-columns: 1fr 1fr; gap:48px; }
+  table { border-collapse:collapse; font-size:24px; width:100%; }
+  td { padding:14px 10px; border-bottom:1px solid #d5dbef; vertical-align:top; }
+  td:first-child { color:var(--muted); width:38%; }
+  .ask { font-size:56px; color:var(--accent); font-weight:700; margin:0 0 20px; }
+  .pill { display:inline-block; background:var(--soft); border-radius:999px; padding:8px 20px; margin:0 10px 10px 0; font-size:22px; }
+</style>
+</head>
+<body>
+
+<section class="slide cover">
+  <div class="kicker">Fintech · B2B SaaS</div>
+  <h1>Sample LedgerLah</h1>
+  <p>Bookkeeping and invoice financing for micro-businesses across Southeast Asia, straight from WhatsApp receipts.</p>
+  <div class="foot">Fictional company created for a hackathon demo. All names and figures are invented.</div>
+  <div class="num">1</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Problem</div>
+  <h2>Micro-businesses run on receipts in a shoebox</h2>
+  <ul>
+    <li>Most hawkers and small shops keep no digital books, so banks can't assess them.</li>
+    <li>Without books they can't get working capital, even with steady sales.</li>
+    <li>Accounting software is built for accountants, not for a stall owner on a phone.</li>
+  </ul>
+  <div class="foot">Fictional company · demo only</div>
+  <div class="num">2</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Product</div>
+  <h2>Forward a receipt, get books and credit</h2>
+  <div class="grid">
+    <div class="card"><b>Capture</b><span>Owners forward receipts and invoices on WhatsApp; we read them automatically.</span></div>
+    <div class="card"><b>Books</b><span>Monthly profit and loss and tax-ready summaries, in English and Vietnamese.</span></div>
+    <div class="card"><b>Credit</b><span>Invoice financing through licensed partner lenders, priced on real cash flow.</span></div>
+  </div>
+  <div class="foot">Fictional company · demo only</div>
+  <div class="num">3</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Traction</div>
+  <h2>Paying customers in two markets</h2>
+  <div class="grid">
+    <div class="card"><b>2,400</b><span>paying micro-businesses in Singapore and Ho Chi Minh City</span></div>
+    <div class="card"><b>S$41k</b><span>monthly recurring revenue, growing 12% month on month</span></div>
+    <div class="card"><b>S$300k</b><span>pre-seed raised from angels in 2025</span></div>
+  </div>
+  <p style="margin-top:32px">We are a <b>seed-stage</b> company with product-market fit in our first two cities.</p>
+  <div class="foot">Fictional company · demo only</div>
+  <div class="num">4</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Team</div>
+  <h2>Operators from banking and payments</h2>
+  <div class="two">
+    <div class="card"><b style="font-size:34px">Wei Ling T.</b><span>CEO · Singaporean · 8 years in SME lending at a regional bank.</span></div>
+    <div class="card"><b style="font-size:34px">Minh N.</b><span>CTO · Vietnamese · built document-reading systems at a payments company.</span></div>
+  </div>
+  <p style="margin-top:28px">Team of 14 across Singapore and Ho Chi Minh City.</p>
+  <div class="foot">Fictional people · demo only</div>
+  <div class="num">5</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">Company</div>
+  <h2>Company facts</h2>
+  <table>
+    <tr><td>Legal entity</td><td>Sample LedgerLah Pte. Ltd.</td></tr>
+    <tr><td>Incorporated in</td><td>Singapore (2024)</td></tr>
+    <tr><td>Offices</td><td>Singapore; Ho Chi Minh City, Vietnam</td></tr>
+    <tr><td>Stage</td><td>Seed</td></tr>
+    <tr><td>Sectors</td><td>Fintech, SaaS</td></tr>
+  </table>
+  <div class="foot">Fictional company · demo only</div>
+  <div class="num">6</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">The ask</div>
+  <p class="ask">Raising S$1.5M seed (equity)</p>
+  <p>We are raising a priced seed round from VCs and angels. We are happy to give up equity to the right partners who bring lending relationships.</p>
+  <p style="margin-bottom:12px">We are looking for:</p>
+  <span class="pill">Seed investment</span><span class="pill">Accelerator programmes</span>
+  <p style="margin-top:20px">Use of funds: launch in Kuala Lumpur and Jakarta, and grow the credit book with partner lenders.</p>
+  <div class="foot">Fictional company · demo only</div>
+  <div class="num">7</div>
+</section>
+
+</body>
+</html>
