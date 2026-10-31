@@ -12,6 +12,7 @@ Do these roughly in order. The first item unblocks the system work.
   - [x] fictional sample pitch deck: [demo/sample_deck.pdf](../demo/sample_deck.pdf), answer key in [demo/README.md](../demo/README.md)
   - [x] non-English demo page (BRIN RISE 2026, Bahasa Indonesia), also in SOURCES_PROPOSED.md
 - [x] **P0** Scaffold `web/` against sample data (`seed-sample` + `serve`). Read the API URL from an environment variable. Brief: [WEB_BRIEF.md](WEB_BRIEF.md). Implemented in #5.
+- [x] **P1** Match the web UI to the pitch deck (palette, Manrope, logo). D20.
 - [x] **P0** Match card: title, organiser, score, reasons, warnings, deadline countdown, source link, "verified on". Implemented in #5.
 - [x] **P0** Gap map: country × stage grid with empty cells highlighted, labelled "coverage so far". Implemented in #5.
 - [x] **P0** Deck upload → editable profile (show the slide number for each field) → match list. Implemented in #5; real-deck testing remains below.

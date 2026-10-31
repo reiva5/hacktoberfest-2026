@@ -10,7 +10,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 API_BASE = os.environ.get("API_BASE", "http://localhost:8000").rstrip("/")
-PORT = int(os.environ.get("WEB_PORT", "5173"))
+PORT = int(os.environ.get("WEB_PORT") or os.environ.get("PORT") or "5173")
 
 
 class Handler(SimpleHTTPRequestHandler):

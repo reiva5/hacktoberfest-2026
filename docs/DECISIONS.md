@@ -67,3 +67,7 @@ Newest last. Each entry records what we decided, why, and when to revisit it. Ag
 ### D19 · Public good, funded by the sponsor · 31 Oct
 **Why:** A gateway is only trusted if listings and rankings can't be bought, so founders and organisers use it for free and Startup ASEAN funds it. Costs stay low (open model, one GPU server, a curator), and the sponsor's return is ecosystem data and the gap map. Featured listings and a paid API were considered and rejected for now, because they put that neutrality at risk.
 **Revisit:** After the pilot, if Startup ASEAN wants cost recovery, for example a data API for policy teams outside ASEAN bodies.
+
+### D20 · The web UI uses the pitch deck's look · 31 Oct
+**Why:** The demo cuts between slides and the live UI, so they should feel like one product. The UI uses the deck's palette (off-white, near-black, grey cards, one yellow accent) and Manrope. Yellow is used only for backgrounds and highlights, never for text on the light background, so contrast stays readable. Error states keep a red tone because the deck has no colour for them.
+**Revisit:** If the venue has no internet, vendor the Manrope font file instead of loading it from Google Fonts.
