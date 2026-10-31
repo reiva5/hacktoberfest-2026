@@ -42,7 +42,7 @@ Do these roughly in order. The first item unblocks the system work.
 ## Shared
 
 - [x] **P0** Merge the selected real crawl into the local sample preview without committing data. HTTP verification on 31 Oct found 27 records: eight preserved samples and 19 historical raw crawl rows. This did not import the separate newer 22-row Gemma 4 dataset or complete the extraction audit; procedure and caveats are in the README.
-- [ ] **P0** Confirm the public preview reaches the merged API and replace sample-only banner wording with accurate mixed-data wording. Preserve individual sample labels; do not present raw crawl rows or combined statistics as verified real coverage.
+- [ ] **P0** Confirm the public preview reaches the merged API. Done: the banner now counts sample versus crawled-but-unchecked records when they're mixed, and per-card Sample labels stay. Remaining: check the routing on the public preview.
 - [ ] **P0** Test the sample deck and the BRIN RISE paste end to end on `gemma-4-31b-it`, and time both for [DEMO.md](DEMO.md) (issue #14).
 - [ ] **P0** Rehearse the demo end to end ([DEMO.md](DEMO.md)) and record a fallback video. The live steps need the Gemini API, so check the venue Wi-Fi and have the video ready if the network drops.
 - [ ] **P1** Share the roadmap page (`gateway-roadmap.html`) with judges if useful.

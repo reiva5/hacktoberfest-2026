@@ -16,7 +16,7 @@ The API address comes from the `API_BASE` environment variable (default `http://
 
 | Screen | Endpoint | Notes |
 |---|---|---|
-| Stats header | `GET /stats` | The four pitch numbers. A banner appears when sample data is loaded. |
+| Stats header | `GET /stats` | The four pitch numbers. A banner says when sample data is loaded, and how many records are sample versus crawled-but-unchecked when they are mixed. |
 | Deck upload → profile | `POST /deck` | Progress timer, cancel button, 10-minute timeout. Each field shows the slide it came from. Falls back to the form on any error. |
 | Profile form → matches | `POST /match` | Reasons and warnings are shown exactly as the API returns them. |
 | Match card | — | Type, countries, score, summary, deadline countdown, amount, equity, reasons, warnings, organiser link and "verified on" date. |
