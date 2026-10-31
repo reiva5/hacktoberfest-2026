@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sample PadiSense pitch deck (fictional)</title>
+<style>
+  @page { size: 13.333in 7.5in; margin: 0; }
+  :root { --ink:#16302b; --muted:#5b6f6a; --accent:#2f8f5b; --soft:#e8f3ec; --warn:#b5651d; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: "Segoe UI", Arial, sans-serif; color: var(--ink); }
+  .slide { width:13.333in; height:7.5in; padding:0.75in 0.9in; position:relative; page-break-after:always; background:#fff; overflow:hidden; }
+  .slide:last-child { page-break-after:auto; }
+  .num { position:absolute; right:0.9in; bottom:0.4in; font-size:14px; color:var(--muted); }
+  .foot { position:absolute; left:0.9in; bottom:0.4in; font-size:14px; color:var(--warn); }
+  .kicker { text-transform:uppercase; letter-spacing:.12em; font-size:16px; color:var(--accent); font-weight:600; margin:0 0 12px; }
+  h1 { font-size:64px; margin:0 0 16px; line-height:1.05; }
+  h2 { font-size:44px; margin:0 0 28px; line-height:1.1; }
+  p, li { font-size:24px; line-height:1.45; }
+  ul { padding-left:1.1em; margin:0; }
+  li { margin-bottom:10px; }
+  .cover { background: var(--ink); color:#fff; display:flex; flex-direction:column; justify-content:center; }
+  .cover .kicker { color:#9fd8b5; }
+  .cover p { color:#cfe3da; font-size:28px; max-width:9in; }
+  .cover .foot { color:#f0c08a; }
+  .cover .num { color:#9fb5ae; }
+  .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:24px; }
+  .card { background:var(--soft); border-radius:14px; padding:24px 26px; }
+  .card b { display:block; font-size:44px; color:var(--accent); margin-bottom:6px; }
+  .card span { font-size:20px; color:var(--muted); }
+  .two { display:grid; grid-template-columns: 1fr 1fr; gap:48px; }
+  table { border-collapse:collapse; font-size:24px; width:100%; }
+  td { padding:14px 10px; border-bottom:1px solid #d6e4dd; vertical-align:top; }
+  td:first-child { color:var(--muted); width:38%; }
+  .ask { font-size:56px; color:var(--accent); font-weight:700; margin:0 0 20px; }
+  .pill { display:inline-block; background:var(--soft); color:var(--ink); border-radius:999px; padding:8px 20px; margin:0 10px 10px 0; font-size:22px; }
+</style>
+</head>
+<body>
+
+<!-- 1 -->
+<section class="slide cover">
+  <div class="kicker">Agritech · AI · Climate resilience</div>
+  <h1>Sample PadiSense</h1>
+  <p>Early warning of rice crop disease and flood stress for smallholder farmers in Southeast Asia, from a phone photo and local weather data.</p>
+  <div class="foot">Fictional company created for a hackathon demo. All names and figures are invented.</div>
+  <div class="num">1</div>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <div class="kicker">Problem</div>
+  <h2>Smallholders find out about crop disease too late</h2>
+  <ul>
+    <li>Blast and brown spot can wipe out 20–30% of a paddy harvest before farmers notice.</li>
+    <li>Extension officers each cover thousands of farmers, so advice arrives weeks late.</li>
+    <li>Flash floods are getting more frequent, and farmers have no plot-level warning.</li>
+  </ul>
+  <div class="foot">Fictional company · demo only</div>
+  <div class="num">2</div>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <div class="kicker">Solution</div>
+  <h2>Snap a leaf, get advice in Bahasa in under a minute</h2>
+  <div class="grid">
+    <div class="card"><b>Detect</b><span>An on-device AI model spots 8 common paddy diseases from a phone photo, even offline.</span></div>
+    <div class="card"><b>Warn</b><span>Plot-level flood and heat alerts from open weather data, sent over WhatsApp.</span></div>
+    <div class="card"><b>Act</b><span>Simple treatment steps in Malay and Bahasa Indonesia, reviewed by agronomists.</span></div>
+  </div>
+  <div class="foot">Fictional company · demo only</div>
+  <div class="num">3</div>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <div class="kicker">Traction</div>
+  <h2>Working prototype, three paid pilots</h2>
+  <div class="grid">
+    <div class="card"><b>3</b><span>farmer co-operative pilots in Kedah and Perak</span></div>
+    <div class="card"><b>140</b><span>active farmers using the app weekly</span></div>
+    <div class="card"><b>RM 18k</b><span>pilot revenue to date; no institutional funding raised yet</span></div>
+  </div>
+  <p style="margin-top:32px">Stage: <b>pre-seed</b>. Prototype live with pilot customers; not yet raising a priced round.</p>
+  <div class="foot">Fictional company · demo only</div>
+  <div class="num">4</div>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+  <div class="kicker">Market</div>
+  <h2>Rice is grown by 100M+ smallholder households across ASEAN</h2>
+  <ul>
+    <li>Start: Malaysia's granary areas (Kedah, Perak, Selangor).</li>
+    <li>Next: Indonesia (Java) and the Philippines (Central Luzon) through co-op partners.</li>
+    <li>Buyers: co-operatives, input suppliers and crop insurers who pay per farmer.</li>
+  </ul>
+  <div class="foot">Fictional company · demo only · market figure is illustrative</div>
+  <div class="num">5</div>
+</section>
+
+<!-- 6 -->
+<section class="slide">
+  <div class="kicker">Business model</div>
+  <h2>Co-ops pay; farmers use it free</h2>
+  <div class="two">
+    <ul>
+      <li>RM 4 per farmer per month, billed to the co-operative.</li>
+      <li>Data-sharing partnerships with crop insurers (anonymised, opt-in).</li>
+    </ul>
+    <ul>
+      <li>Gross margin target: 70%.</li>
+      <li>Break-even at roughly 12,000 farmers.</li>
+    </ul>
+  </div>
+  <div class="foot">Fictional company · demo only</div>
+  <div class="num">6</div>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <div class="kicker">Team</div>
+  <h2>Two founders, both from farming families</h2>
+  <div class="two">
+    <div class="card"><b style="font-size:34px">Aina R.</b><span>CEO · Malaysian · ex-agronomist with a state agriculture agency, 7 years in the field.</span></div>
+    <div class="card"><b style="font-size:34px">Bayu S.</b><span>CTO · Indonesian · machine-learning engineer, built on-device vision models for mobile.</span></div>
+  </div>
+  <p style="margin-top:28px">Advisers: a plant pathologist and a co-operative federation leader (both fictional).</p>
+  <div class="foot">Fictional people · demo only</div>
+  <div class="num">7</div>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+  <div class="kicker">Company</div>
+  <h2>Company facts</h2>
+  <table>
+    <tr><td>Legal entity</td><td>Sample PadiSense Sdn. Bhd.</td></tr>
+    <tr><td>Incorporated in</td><td>Malaysia (2025)</td></tr>
+    <tr><td>Headquarters</td><td>Kuala Lumpur, Malaysia</td></tr>
+    <tr><td>Stage</td><td>Pre-seed</td></tr>
+    <tr><td>Sectors</td><td>Agritech, AI, climate</td></tr>
+    <tr><td>Team size</td><td>5 (2 founders, 3 staff)</td></tr>
+  </table>
+  <div class="foot">Fictional company · demo only</div>
+  <div class="num">8</div>
+</section>
+
+<!-- 9 -->
+<section class="slide">
+  <div class="kicker">The ask</div>
+  <p class="ask">RM 300,000 non-dilutive</p>
+  <p>We prefer <b>grants and other equity-free funding</b> for the next 12 months, so we can prove retention before giving up equity.</p>
+  <p style="margin-bottom:12px">We are looking for:</p>
+  <span class="pill">Grants</span><span class="pill">Accelerator programmes</span><span class="pill">Cloud credits</span><span class="pill">Government schemes</span>
+  <p style="margin-top:20px">Use of funds: expand to 1,000 farmers, add Bahasa Indonesia voice support, start an Indonesian pilot.</p>
+  <div class="foot">Fictional company · demo only</div>
+  <div class="num">9</div>
+</section>
+
+<!-- 10 -->
+<section class="slide cover">
+  <div class="kicker">Thank you</div>
+  <h1>Sample PadiSense</h1>
+  <p>hello@example.org · example.org/padisense</p>
+  <div class="foot">Fictional company created for a hackathon demo. All names and figures are invented.</div>
+  <div class="num">10</div>
+</section>
+
+</body>
+</html>
