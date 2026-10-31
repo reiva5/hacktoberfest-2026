@@ -1,0 +1,14 @@
+# Pull requests ask the area owner for review. See AGENTS.md "Team and ownership".
+*                     @adhibskr @reiva5
+
+/gateway/             @adhibskr
+/tests/               @adhibskr
+/fixtures/            @adhibskr
+/sources.yaml         @adhibskr
+
+/web/                 @reiva5
+
+# Shared contract: both owners.
+/gateway/schema.py    @adhibskr @reiva5
+/gateway/api.py       @adhibskr @reiva5
+/docs/openapi.json    @adhibskr @reiva5

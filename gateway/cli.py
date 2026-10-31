@@ -25,7 +25,7 @@ def _print_matches(profile: Profile, programs) -> None:
         print(f"       why: {'; '.join(m.reasons)}")
         if m.warnings:
             print(f"       note: {'; '.join(m.warnings)}")
-        print(f"       source: {p.canonical_url}" + (f" (also on {len(p.seen_on)} other pages)" if p.seen_on else ""))
+        print(f"       source: {p.canonical_url}" + (f" (also listed on {len(p.seen_on)} other page{'s' if len(p.seen_on) > 1 else ''})" if p.seen_on else ""))
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -68,6 +68,10 @@ def main(argv: list[str] | None = None) -> int:
     e.add_argument("--out", default="data/programs.json")
     s = sub.add_parser("serve", help="Run the HTTP API for the UI")
     s.add_argument("--port", type=int, default=8000)
+    ss = sub.add_parser("seed-sample", help="Load fictional sample programs so the UI can be built without a model")
+    ss.add_argument("--file", default="fixtures/sample_programs.json")
+    o = sub.add_parser("openapi", help="Write the API contract to docs/openapi.json")
+    o.add_argument("--check", action="store_true", help="Exit 1 if docs/openapi.json is out of date (used by CI)")
 
     args = ap.parse_args(argv)
     # Windows consoles default to cp1252, which can't print Thai, Khmer or Vietnamese.
@@ -124,6 +128,25 @@ def main(argv: list[str] | None = None) -> int:
     elif args.cmd == "serve":
         import uvicorn
         uvicorn.run("gateway.api:app", port=args.port, reload=False)
+    elif args.cmd == "seed-sample":
+        from pathlib import Path
+        from .fixtures import load_sample
+        n = load_sample(db, Path(args.file))
+        print(f"Loaded {n} sample programs (fictional, for UI work). Run `python -m gateway serve` next.")
+    elif args.cmd == "openapi":
+        from pathlib import Path
+        from .api import app
+        path = Path(__file__).resolve().parent.parent / "docs" / "openapi.json"
+        spec = json.dumps(app.openapi(), indent=2, sort_keys=True, ensure_ascii=False) + "\n"
+        if args.check:
+            if not path.exists() or path.read_text(encoding="utf-8") != spec:
+                print("docs/openapi.json is out of date. Run `python -m gateway openapi` and commit it.")
+                return 1
+            print("docs/openapi.json is up to date.")
+        else:
+            path.parent.mkdir(exist_ok=True)
+            path.write_text(spec, encoding="utf-8")
+            print(f"Wrote {path}")
     return 0
 
 
