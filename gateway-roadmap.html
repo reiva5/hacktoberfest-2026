@@ -1,0 +1,511 @@
+<title>ASEAN Startup Gateway Roadmap</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; a two-lane comparison (MVP vs Next) is the spine, with pipeline, sample card and demo script hanging off it */
+:root {
+  --bg: #f5f7f8;
+  --surface: #ffffff;
+  --ink: #14232b;
+  --muted: #56666f;
+  --line: #d9e0e4;
+  --mvp: #0b6e6e;
+  --mvp-soft: #dff0ef;
+  --next: #b5650a;
+  --next-soft: #fbeedc;
+  --later: #5b5f9e;
+  --later-soft: #e8e9f6;
+  --cut: #a23b3b;
+  --cut-soft: #f7e3e3;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1619; --surface: #162126; --ink: #e4ecef; --muted: #9aabb3; --line: #2a3a41;
+    --mvp: #5cc4c0; --mvp-soft: #163634; --next: #f0a64d; --next-soft: #3a2a15;
+    --later: #a5a9ec; --later-soft: #24264a; --cut: #ec8b8b; --cut-soft: #3b1f1f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1619; --surface: #162126; --ink: #e4ecef; --muted: #9aabb3; --line: #2a3a41;
+  --mvp: #5cc4c0; --mvp-soft: #163634; --next: #f0a64d; --next-soft: #3a2a15;
+  --later: #a5a9ec; --later-soft: #24264a; --cut: #ec8b8b; --cut-soft: #3b1f1f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 15px/1.6 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 64px;
+}
+.wrap { max-width: 1040px; margin: 0 auto; display: grid; gap: 56px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.15; }
+h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: 24px; font-weight: 700; }
+h3 { font-size: 17px; font-weight: 600; }
+p { margin: 0; }
+.eyebrow { font: 500 12px/1 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lede { font-size: 18px; color: var(--muted); max-width: 64ch; }
+section { display: grid; gap: 20px; min-width: 0; }
+.sec-head { display: grid; gap: 6px; }
+.sec-head p { color: var(--muted); max-width: 66ch; }
+
+/* hero */
+.hero { display: grid; gap: 18px; }
+.thesis {
+  display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: baseline;
+  font-family: var(--font-display); font-size: clamp(20px, 3vw, 26px); font-weight: 600;
+}
+.thesis .a { color: var(--mvp); }
+.thesis .b { color: var(--next); }
+.thesis .sep { color: var(--line); }
+
+/* phase strip */
+.phases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.phase { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 8px; align-content: start; }
+.phase .tag { justify-self: start; font: 500 11px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; padding: 5px 8px; border-radius: 999px; }
+.phase.mvp { border-top: 4px solid var(--mvp); }
+.phase.next { border-top: 4px solid var(--next); }
+.phase.later { border-top: 4px solid var(--later); }
+.mvp .tag { background: var(--mvp-soft); color: var(--mvp); }
+.next .tag { background: var(--next-soft); color: var(--next); }
+.later .tag { background: var(--later-soft); color: var(--later); }
+.phase .when { font: 400 13px/1.4 var(--font-mono); color: var(--muted); }
+.phase p { color: var(--muted); font-size: 14px; }
+
+/* comparison table */
+.tbl-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+tr:last-child td { border-bottom: 0; }
+thead th { font: 500 12px/1.2 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: var(--bg); }
+thead th.c-mvp { color: var(--mvp); }
+thead th.c-next { color: var(--next); }
+thead th.c-later { color: var(--later); }
+tbody th { font-weight: 600; width: 15%; }
+td.c-mvp { background: color-mix(in srgb, var(--mvp-soft) 45%, transparent); }
+td { color: var(--ink); }
+td.c-later { color: var(--muted); }
+
+/* pipeline */
+.pipe { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; }
+.step { flex: 1 1 120px; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: grid; gap: 4px; align-content: start; position: relative; }
+.step b { font-family: var(--font-display); font-size: 15px; }
+.step span { font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+.step .tool { font: 400 11.5px/1.4 var(--font-mono); color: var(--mvp); }
+.step.next { border-style: dashed; border-color: var(--next); background: transparent; }
+.step.next .tool { color: var(--next); }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--muted); }
+.legend i { display: inline-block; width: 14px; height: 10px; border-radius: 2px; vertical-align: -1px; margin-right: 6px; }
+.legend .l-mvp { background: var(--surface); border: 1px solid var(--line); }
+.legend .l-next { border: 1px dashed var(--next); }
+
+/* product preview */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 20px; align-items: start; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 14px; min-width: 0; }
+.panel .ph { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
+.example-note { font: 400 11.5px/1 var(--font-mono); color: var(--muted); }
+.field { display: grid; gap: 4px; }
+.field label { font-size: 12px; color: var(--muted); }
+.field .val { border: 1px solid var(--line); border-radius: 6px; padding: 7px 10px; font-size: 14px; background: var(--bg); }
+.match { border: 1px solid var(--line); border-radius: 8px; padding: 14px; display: grid; gap: 8px; }
+.match .top { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: baseline; }
+.match .org { font-size: 13px; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12px; padding: 3px 8px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); }
+.chip.ok { background: var(--mvp-soft); border-color: transparent; color: var(--mvp); }
+.chip.warn { background: var(--next-soft); border-color: transparent; color: var(--next); }
+.why { font-size: 13px; color: var(--muted); }
+.prov { font: 400 11.5px/1.4 var(--font-mono); color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.score { font: 500 13px/1 var(--font-mono); color: var(--mvp); }
+
+/* schema */
+pre { margin: 0; overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; font: 13px/1.6 var(--font-mono); }
+pre .k { color: var(--mvp); }
+pre .c { color: var(--muted); }
+pre .n { color: var(--next); }
+
+/* two-col lists */
+.cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.box ul, .box ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.box li { padding-left: 2px; }
+.box .who { font: 500 12px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--mvp); }
+.box.cut { border-color: var(--cut-soft); }
+.box.cut h3 { color: var(--cut); }
+.demo ol { counter-reset: d; list-style: none; padding: 0; }
+.demo li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; align-items: start; }
+.demo li::before { counter-increment: d; content: counter(d); font: 600 14px/28px var(--font-display); text-align: center; width: 28px; height: 28px; border-radius: 50%; background: var(--mvp-soft); color: var(--mvp); }
+.demo li small { display: block; color: var(--muted); font-size: 13px; }
+
+/* metrics */
+.metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.metric-list { display: grid; gap: 8px; }
+.metric-list div { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; font-size: 14px; }
+.metric-list div:last-child { border-bottom: 0; }
+.metric-list b { font-variant-numeric: tabular-nums; font-family: var(--font-mono); font-weight: 500; white-space: nowrap; }
+
+/* deck drop */
+.drop { border: 1.5px dashed var(--mvp); border-radius: 8px; padding: 12px; display: flex; gap: 12px; align-items: center; background: var(--mvp-soft); }
+.drop .file { font: 500 13px/1.3 var(--font-mono); color: var(--mvp); }
+.drop small { display: block; color: var(--muted); font-size: 12px; font-family: var(--font-body); }
+.drop .icon { flex: none; width: 34px; height: 42px; border: 1.5px solid var(--mvp); border-radius: 4px; position: relative; }
+.drop .icon::after { content: "PDF"; position: absolute; inset: auto 0 6px; text-align: center; font: 600 9px/1 var(--font-mono); color: var(--mvp); }
+.val .src { font: 400 11px/1 var(--font-mono); color: var(--mvp); margin-left: 6px; }
+
+/* gap map */
+.gap-wrap { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.heat-scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.heat { display: grid; grid-template-columns: 120px repeat(4, minmax(64px, 1fr)); gap: 4px; min-width: 420px; font-size: 13px; }
+.heat .hd { font: 500 11px/1.2 var(--font-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); padding: 4px 2px; align-self: end; }
+.heat .ct { padding: 8px 2px; font-weight: 500; }
+.heat .cell { border-radius: 5px; padding: 8px 0; text-align: center; font: 500 13px/1.2 var(--font-mono); font-variant-numeric: tabular-nums; }
+.heat .cell.zero { border: 1.5px dashed var(--cut); color: var(--cut); background: var(--cut-soft); }
+.callout { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 10px; }
+.callout .q { font-family: var(--font-display); font-size: 19px; font-weight: 600; line-height: 1.3; }
+.callout p { color: var(--muted); font-size: 14px; }
+
+/* pitch numbers */
+.numbers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.num { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 6px; align-content: start; }
+.num .blank { font: 600 30px/1 var(--font-display); color: var(--mvp); letter-spacing: .04em; }
+.num span { font-size: 13.5px; color: var(--muted); }
+.new-badge { font: 500 10.5px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--next); background: var(--next-soft); padding: 4px 7px; border-radius: 999px; vertical-align: 3px; margin-left: 8px; }
+
+footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px; }
+
+@media (max-width: 760px) {
+  .phases, .split, .cols, .metrics, .gap-wrap { grid-template-columns: minmax(0, 1fr); }
+  .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">Hacktoberfest Kuala Lumpur · 31 Oct 2026 · Team of 2</p>
+    <h1>One gateway to ASEAN startup programs and funding</h1>
+    <p class="lede">For founders, the hard part isn't finding a list of programs. It's working out which of the hundreds spread across ten countries they actually qualify for before the deadline. We start by aggregating so the gateway is useful on day one, then move organisations onto direct listings.</p>
+    <div class="thesis"><span class="a">Aggregate institutions.</span><span class="sep">/</span><span class="b">Invite people.</span></div>
+  </header>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Phases</p>
+      <h2>What we build now, next, and later</h2>
+    </div>
+    <div class="phases">
+      <div class="phase mvp">
+        <span class="tag">MVP</span>
+        <h3>Eligibility-matched programs</h3>
+        <p class="when">Hackathon · today</p>
+        <p>Programs and funding calls, crawled from 15–20 seed sources and pulled into structured records by Gemma. A founder uploads a pitch deck and gets matched programs. Startup ASEAN sees a map of where the region lacks support.</p>
+      </div>
+      <div class="phase next">
+        <span class="tag">Next phase</span>
+        <h3>Pilot with Startup ASEAN</h3>
+        <p class="when">~3 months after</p>
+        <p>Automatic discovery of new sources, accounts and deadline alerts, and organisers claiming their own listings. Funders and investors added as the second category.</p>
+      </div>
+      <div class="phase later">
+        <span class="tag">Later</span>
+        <h3>The full gateway</h3>
+        <p class="when">6–12 months</p>
+        <p>Opt-in talent profiles, partner matching, and an ecosystem data layer for governments and ecosystem builders.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">MVP vs next phase</p>
+      <h2>Side by side</h2>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th></th><th class="c-mvp">MVP · today</th><th class="c-next">Next phase · pilot</th><th class="c-later">Later</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>Categories</th><td class="c-mvp">Programs and funding calls only (accelerators, grants, competitions, government schemes)</td><td>Add funders and investors as a searchable database</td><td class="c-later">Talent, partners, jobs</td></tr>
+          <tr><th>Primary user</th><td class="c-mvp">Early-stage founder in one ASEAN country</td><td>Founders across all 10 ASEAN countries, plus Startup ASEAN curators</td><td class="c-later">Funders, corporates, governments</td></tr>
+          <tr><th>Sources</th><td class="c-mvp">15–20 hand-picked seed URLs across 5 page types</td><td>200+ sources, found by discovery and checked by a curator before they go live</td><td class="c-later">Organisers post directly; crawling becomes the fallback</td></tr>
+          <tr><th>Discovery</th><td class="c-mvp">Follow outbound links from seeds; small Gemma model labels "program page or not"</td><td>Scheduled SearXNG queries per country and sector; monitor aggregators for new listings</td><td class="c-later">Organisers can submit new sources</td></tr>
+          <tr><th>Extraction</th><td class="c-mvp">Clean page text → Gemma fills a fixed JSON schema</td><td>Read structured data first (RSS, sitemaps, schema.org); confidence score on each field</td><td class="c-later">Organisers correct extracted fields, and corrections improve future extraction</td></tr>
+          <tr><th>Resilience</th><td class="c-mvp">No CSS selectors; validation rules flag missing fields or past deadlines</td><td>Change detection, automatic re-extraction, a queue of sources needing review, source health shown on a dashboard</td><td class="c-later">Service-level target for how fresh each source is</td></tr>
+          <tr><th>Duplicates</th><td class="c-mvp">Follow every listing back to the organiser's own page; match on name and organiser</td><td>Embedding similarity plus one record shared across countries</td><td class="c-later">Shared program IDs others can link to</td></tr>
+          <tr><th>Experience</th><td class="c-mvp">Upload a pitch deck (or fill a short form) → profile filled in → ranked matches with "why you qualify" and deadline. No login.</td><td>Accounts, saved programs, weekly deadline digest by email or Telegram</td><td class="c-later">Gemma drafts answers to application questions from the deck; application tracking</td></tr>
+          <tr><th>Ecosystem view</th><td class="c-mvp">Gap map: programs by country × stage, highlighting where there are none</td><td>Changes over time, broken down by sector, exportable for policy teams</td><td class="c-later">Open ecosystem data and an API for ASEAN governments</td></tr>
+          <tr><th>Direct side</th><td class="c-mvp">Pitch slide only</td><td>Organisers claim and verify their listings ("verified" badge)</td><td class="c-later">Organisers manage applications on the platform</td></tr>
+          <tr><th>Languages</th><td class="c-mvp">At least one non-English source shown live (BM, Bahasa Indonesia or Vietnamese)</td><td>Language of each source detected; listings shown in English plus the original language</td><td class="c-later">Interface in multiple languages</td></tr>
+          <tr><th>Model and infra</th><td class="c-mvp">Gemma via Ollama on a laptop; SQLite; results cached before the demo</td><td>Gemma on a hosted GPU (vLLM); Postgres + pgvector; scheduled crawl jobs</td><td class="c-later">Gemma fine-tuned on corrected extractions</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Pipeline</p>
+      <h2>How a web page becomes a program record</h2>
+      <p>Solid boxes are built today. Dashed boxes come in the next phase.</p>
+    </div>
+    <div class="pipe">
+      <div class="step"><b>Seeds</b><span>sources.yaml with page type and country</span><span class="tool">yaml</span></div>
+      <div class="step"><b>Fetch</b><span>Polite fetching that respects robots.txt; headless browser only for JavaScript-heavy pages</span><span class="tool">httpx · Playwright</span></div>
+      <div class="step"><b>Clean</b><span>Remove menus and boilerplate, convert to markdown</span><span class="tool">trafilatura / Crawl4AI</span></div>
+      <div class="step"><b>Extract</b><span>Gemma fills the schema in JSON mode</span><span class="tool">Gemma 12B/27B</span></div>
+      <div class="step"><b>Validate</b><span>Required fields present, deadline in the future, a link back to the source</span><span class="tool">pydantic</span></div>
+      <div class="step"><b>Dedupe + store</b><span>Find the organiser's own page; one record per program</span><span class="tool">SQLite</span></div>
+      <div class="step"><b>Deck → profile</b><span>Gemma reads the slides and fills country, stage, sector, founders</span><span class="tool">Gemma 3 image input</span></div>
+      <div class="step"><b>Match</b><span>Filter on eligibility, rank by fit and deadline</span><span class="tool">Python + UI</span></div>
+      <div class="step"><b>Gap map</b><span>Count active programs by country × stage</span><span class="tool">SQL + grid</span></div>
+    </div>
+    <div class="pipe">
+      <div class="step next"><b>Discover</b><span>Search queries and link following find new sources</span><span class="tool">SearXNG</span></div>
+      <div class="step next"><b>Change watch</b><span>Hash the content and re-extract when it changes</span><span class="tool">scheduler</span></div>
+      <div class="step next"><b>Review queue</b><span>A curator approves new sources and pages that failed validation</span><span class="tool">admin UI</span></div>
+      <div class="step next"><b>Alerts</b><span>Deadline digests based on saved profiles</span><span class="tool">email · Telegram</span></div>
+      <div class="step next"><b>Claim</b><span>Organiser verifies their domain and edits the listing</span><span class="tool">auth</span></div>
+    </div>
+    <div class="legend"><span><i class="l-mvp"></i>MVP</span><span><i class="l-next"></i>Next phase</span></div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">What the founder sees</p>
+      <h2>The MVP screen</h2>
+      <p>The founder drops in their pitch deck. Gemma fills in the profile, the founder can correct any field, and matches appear on the right with a reason and a source for each.</p>
+    </div>
+    <div class="split">
+      <div class="panel">
+        <div class="ph"><h3>Your startup</h3><span class="example-note">sample input</span></div>
+        <div class="drop"><div class="icon"></div><div><span class="file">paynow-seed-deck.pdf</span><small>14 slides read · 5 fields filled · check and edit below</small></div></div>
+        <div class="field"><label>Country of incorporation</label><div class="val">Malaysia<span class="src">slide 12</span></div></div>
+        <div class="field"><label>Stage</label><div class="val">Pre-seed · prototype built<span class="src">slide 9</span></div></div>
+        <div class="field"><label>Sector</label><div class="val">Fintech · payments<span class="src">slide 2</span></div></div>
+        <div class="field"><label>Founder profile</label><div class="val">2 founders · Malaysian citizens<span class="src">slide 13</span></div></div>
+        <div class="field"><label>Looking for</label><div class="val">Grant or equity-free funding<span class="src">slide 14</span></div></div>
+      </div>
+      <div class="panel">
+        <div class="ph"><h3>Programs you qualify for</h3><span class="example-note">illustrative layout, not real deadlines</span></div>
+        <div class="match">
+          <div class="top"><h3>Pre-seed grant scheme</h3><span class="score">fit 92</span></div>
+          <p class="org">National startup agency · Malaysia</p>
+          <div class="chips"><span class="chip ok">Country ✓</span><span class="chip ok">Stage ✓</span><span class="chip ok">Equity-free ✓</span><span class="chip warn">Closes in 12 days</span></div>
+          <p class="why">Fits you because: open to Malaysian-owned companies at prototype stage, any sector.</p>
+          <div class="prov"><span>source: organiser's own page</span><span>verified 31 Oct</span><span>also listed on 2 aggregators</span></div>
+        </div>
+        <div class="match">
+          <div class="top"><h3>Regional accelerator, Southeast Asia cohort</h3><span class="score">fit 78</span></div>
+          <p class="org">Global tech company · ASEAN-wide</p>
+          <div class="chips"><span class="chip ok">Country ✓</span><span class="chip ok">Equity-free ✓</span><span class="chip warn">Prefers seed stage</span><span class="chip">Closes in 34 days</span></div>
+          <p class="why">Partial fit: prefers startups with early revenue. Worth applying if you have pilots.</p>
+          <div class="prov"><span>source: organiser's own page</span><span>verified 31 Oct</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">What Startup ASEAN sees</p>
+      <h2>The gap map<span class="new-badge">Added</span></h2>
+      <p>The same records, counted by country and stage. This shows the sponsor something they can't easily see today: where in the region founders have nowhere to apply.</p>
+    </div>
+    <div class="gap-wrap">
+      <div class="heat-scroll">
+        <div class="heat" id="heat" role="table" aria-label="Active programs by country and stage, sample values"></div>
+        <p class="example-note" style="margin-top:12px">Sample values to show the layout. The real grid is filled from crawled records.</p>
+      </div>
+      <div class="callout">
+        <p class="eyebrow">The line for the pitch</p>
+        <p class="q">"Founders in [country] have no pre-seed program they can apply to this quarter."</p>
+        <p>Fill in the country from your real data on the day. Be careful how you say it: an empty cell can also mean we haven't crawled that country's sources yet. Call it "coverage so far" and name the sources you checked.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Numbers for the pitch</p>
+      <h2>Fill these in from the crawl<span class="new-badge">Added</span></h2>
+      <p>Real numbers beat any adjective. The last one proves that discovery finds things the existing aggregators don't.</p>
+    </div>
+    <div class="numbers">
+      <div class="num"><span class="blank">___</span><span>active programs and funding calls found</span></div>
+      <div class="num"><span class="blank">___</span><span>closing in the next 30 days</span></div>
+      <div class="num"><span class="blank">___</span><span>ASEAN countries covered</span></div>
+      <div class="num"><span class="blank">___</span><span>not listed on e27 or F6S</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Data model</p>
+      <h2>The program record</h2>
+      <p>Gemma fills this record for every page. Matching depends on the eligibility fields, so they are the most important part.</p>
+    </div>
+<pre><span class="k">program</span> {
+  title, organiser, organiser_url
+  type:         <span class="n">accelerator | grant | competition | gov_scheme | credits</span>
+  countries:    [ISO codes]          <span class="c"># where applicants must be based</span>
+  sectors:      [..]                 <span class="c"># empty = sector-agnostic</span>
+  stages:       <span class="n">idea | pre-seed | seed | series-a+</span>
+  funding:      { amount, currency, <span class="n">equity_free: bool</span>, equity_pct }
+  eligibility:  [free-text rules]    <span class="c"># shown as "why you qualify"</span>
+  deadline:     date | <span class="n">rolling</span>
+  language:     original page language
+  canonical_url, seen_on: [aggregator urls]
+  last_verified, extraction_confidence
+}</pre>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Today</p>
+      <h2>Who builds what</h2>
+    </div>
+    <div class="cols">
+      <div class="box">
+        <span class="who">Person A · pipeline</span>
+        <ul>
+          <li>Seed list: MYStartup or Startup SG, Cradle, Google for Startups SEA, Antler, e27 or Devpost, plus one non-English page</li>
+          <li>Fetch → clean → Gemma extraction → validation</li>
+          <li>Follow aggregator listings back to the organiser's page and remove duplicates</li>
+          <li>"Paste a URL" endpoint for the live demo</li>
+          <li><strong>Deck → profile:</strong> slides as images into Gemma, with plain PDF text as a fallback</li>
+        </ul>
+      </div>
+      <div class="box">
+        <span class="who">Person B · product</span>
+        <ul>
+          <li>Profile form and matching logic (eligibility filter, then rank)</li>
+          <li>Match cards with the reason they fit, the deadline, and the source</li>
+          <li>Run the pipeline ahead of time and cache 30–50 records so the demo works offline</li>
+          <li><strong>Gap map</strong> view: country × stage grid with empty cells highlighted</li>
+          <li>Pull the four pitch numbers from the database</li>
+          <li>Pitch: the problem, the live demo, and how it grows into the full gateway</li>
+        </ul>
+        <p style="color:var(--muted);font-size:13.5px">If time runs short, cut the deck upload before the gap map. The gap map is cheaper and speaks to the sponsor.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cols">
+      <div class="box demo">
+        <h3>Demo script · about 4 minutes</h3>
+        <ol>
+          <li><div>Open with the pitch numbers<small>"We found ___ programs; ___ aren't on any aggregator"</small></div></li>
+          <li><div>Drop in a founder's pitch deck<small>Profile fills itself, matches appear with reasons and deadlines (the founder moment)</small></div></li>
+          <li><div>Paste a Bahasa Indonesia program page<small>Comes out as an English structured record in about 20 seconds</small></div></li>
+          <li><div>Show the gap map<small>"Here's what the region is missing" (the sponsor moment)</small></div></li>
+          <li><div>20 seconds: restyle a source page live<small>Extraction still works, so the crawler survives redesigns</small></div></li>
+          <li><div>Close on the next-phase slide<small>Organisers claim their listings; talent profiles are opt-in</small></div></li>
+        </ol>
+      </div>
+      <div class="box cut">
+        <h3>Deliberately left out of the MVP</h3>
+        <ul>
+          <li><strong>LinkedIn or other talent scraping.</strong> Against LinkedIn's terms, a PDPA risk, and a bad look for a public body. Talent will be opt-in later.</li>
+          <li><strong>Logins and accounts.</strong> They add nothing for judges watching a 4-minute demo.</li>
+          <li><strong>Partners category.</strong> Too vague to demo well.</li>
+          <li><strong>Funder database.</strong> Moved to the next phase. Good open data on funders is hard to find.</li>
+          <li><strong>Large-scale discovery.</strong> Show that it works on the seeds rather than claiming coverage.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Success measures</p>
+      <h2>How we'll know it works</h2>
+    </div>
+    <div class="metrics">
+      <div class="box">
+        <h3 style="color:var(--mvp)">MVP (targets for today)</h3>
+        <div class="metric-list">
+          <div><span>Structured program records</span><b>30–50</b></div>
+          <div><span>Source page types handled</span><b>5</b></div>
+          <div><span>Key fields correct (manual spot check)</span><b>≥ 85%</b></div>
+          <div><span>Time to ingest a new URL</span><b>&lt; 30 s</b></div>
+          <div><span>Extraction still works after HTML restyle</span><b>yes</b></div>
+          <div><span>Profile fields correct from a sample deck</span><b>≥ 4 of 5</b></div>
+          <div><span>Programs found that aren't on e27 or F6S</span><b>≥ 5</b></div>
+        </div>
+      </div>
+      <div class="box">
+        <h3 style="color:var(--next)">Next phase (pilot targets)</h3>
+        <div class="metric-list">
+          <div><span>Active programs covered across ASEAN</span><b>500+</b></div>
+          <div><span>Records verified in the last 14 days</span><b>≥ 90%</b></div>
+          <div><span>Founders returning each week</span><b>track</b></div>
+          <div><span>Listings claimed by organisers</span><b>track</b></div>
+          <div><span>Applications started from a match</span><b>track</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cols">
+      <div class="box">
+        <h3>Risks to plan around</h3>
+        <ul>
+          <li>Gemma 4B gets eligibility fields wrong. Use 12B/27B for extraction and 4B only to classify pages.</li>
+          <li>Live inference is slow on stage. Cache everything except the paste-a-URL moment.</li>
+          <li>Out-of-date listings lose trust fast. Show "verified on" and the source on every card.</li>
+          <li>Sites block the crawler. Crawl politely, respect robots.txt, and prefer each organiser's own page.</li>
+          <li>Gemma misreads a design-heavy deck. Show which slide each field came from, keep every field editable, and test on two or three real decks beforehand.</li>
+          <li>The gap map overstates gaps. With only 15–20 sources, an empty cell may just mean we haven't crawled there yet. Label it "coverage so far".</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Questions to settle</h3>
+        <ul>
+          <li>Is Startup ASEAN judging, and what do they want to come out of this?</li>
+          <li>Main user for the pitch: founders, or Startup ASEAN curators?</li>
+          <li>What GPU access do we have for Gemma 12B/27B?</li>
+          <li>When does the hackathon end, and how long is the demo slot?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <script>
+  (function () {
+    // Sample values for layout only; replace with counts from the crawl.
+    var stages = ["Idea", "Pre-seed", "Seed", "Series A+"];
+    var rows = [
+      ["Singapore", [6, 9, 7, 4]], ["Malaysia", [5, 7, 4, 2]], ["Indonesia", [4, 6, 5, 2]],
+      ["Vietnam", [3, 4, 3, 1]], ["Thailand", [3, 4, 3, 1]], ["Philippines", [3, 3, 2, 1]],
+      ["Brunei", [1, 1, 0, 0]], ["Cambodia", [2, 1, 0, 0]], ["Laos", [1, 0, 0, 0]], ["Myanmar", [1, 0, 0, 0]]
+    ];
+    var el = document.getElementById("heat");
+    if (!el) return;
+    var max = 9, html = '<div class="hd">Country</div>';
+    stages.forEach(function (s) { html += '<div class="hd">' + s + '</div>'; });
+    rows.forEach(function (r) {
+      html += '<div class="ct">' + r[0] + '</div>';
+      r[1].forEach(function (n, i) {
+        if (n === 0) { html += '<div class="cell zero" title="' + r[0] + ', ' + stages[i] + ': none found">0</div>'; return; }
+        var pct = Math.round(18 + (n / max) * 72);
+        var fg = pct > 55 ? "var(--surface)" : "var(--ink)";
+        html += '<div class="cell" style="background:color-mix(in srgb, var(--mvp) ' + pct + '%, var(--surface));color:' + fg + '" title="' + r[0] + ', ' + stages[i] + ': ' + n + '">' + n + '</div>';
+      });
+    });
+    el.innerHTML = html;
+  })();
+  </script>
+
+  <footer>Draft roadmap for the Hacktoberfest KL team. Program names on the seed list come from public sources; check each one is still running before the demo.</footer>
+</div>

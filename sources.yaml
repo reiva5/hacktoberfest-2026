@@ -1,0 +1,37 @@
+# Seed sources. kind = the page type it exercises in the demo:
+#   portal       government or agency site listing several programs
+#   program      a single program page with rich eligibility
+#   aggregator   third-party listing; the pipeline follows each entry to the organiser's page
+#   regional     one program across several ASEAN countries (tests duplicate handling)
+#   non-english  page in BM, Bahasa Indonesia, Vietnamese or Thai
+# Run `python -m gateway crawl` and check `python -m gateway sources` for dead links before the demo.
+# Swap any homepage for its programs or "apply" page once you've found it.
+
+sources:
+  # Malaysia
+  - {url: "https://www.mystartup.gov.my/", kind: portal, country: MY}
+  - {url: "https://www.cradle.com.my/", kind: portal, country: MY}
+  - {url: "https://mranti.my/", kind: portal, country: MY}
+  - {url: "https://mdec.my/", kind: portal, country: MY}
+
+  # Singapore
+  - {url: "https://www.startupsg.gov.sg/programmes/", kind: portal, country: SG}
+  - {url: "https://www.sginnovate.com/", kind: portal, country: SG}
+
+  # Regional / single programs
+  - {url: "https://startup.google.com/programs/accelerator/southeast-asia/", kind: program, country: ASEAN}
+  - {url: "https://www.antler.co/pitch", kind: regional, country: ASEAN}
+  - {url: "https://ventures.adb.org/", kind: program, country: ASEAN}
+  - {url: "https://www.youthcolab.org/", kind: regional, country: ASEAN}
+  - {url: "https://aws.amazon.com/startups/credits", kind: program, country: GLOBAL}
+
+  # Other ASEAN countries
+  - {url: "https://www.nia.or.th/", kind: portal, country: TH}
+  - {url: "https://nic.gov.vn/", kind: non-english, country: VN}
+  - {url: "https://www.qboinnovation.com/", kind: portal, country: PH}
+  - {url: "https://tsc.gov.kh/", kind: non-english, country: KH}
+
+  # Aggregators
+  # e27 answers our crawler with HTTP 403. Respect that: don't fake a browser user agent.
+  # - {url: "https://e27.co/events/", kind: aggregator, country: ASEAN}
+  - {url: "https://devpost.com/hackathons?challenge_type[]=in-person&search=asia", kind: aggregator, country: ASEAN}
