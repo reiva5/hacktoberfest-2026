@@ -17,6 +17,7 @@ Owners follow the areas in [AGENTS.md](../AGENTS.md). Tick items off here, or mi
 
 ## Web UI · @reiva5 (Copilot)
 
+- [ ] **P0** Close or rework the talent-portal draft PR (see D14): move any reusable card/filter code into `web/` and read data from the API. Brief: [WEB_BRIEF.md](WEB_BRIEF.md).
 - [ ] **P0** Scaffold `web/` against sample data (`seed-sample` + `serve`). Read the API URL from an environment variable.
 - [ ] **P0** Deck upload → editable profile (show the slide number for each field) → match list.
 - [ ] **P0** Match card: title, organiser, score, reasons, warnings, deadline countdown, source link, "verified on".

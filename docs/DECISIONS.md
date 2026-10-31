@@ -44,3 +44,7 @@ Newest last. Each entry records what we decided, why, and when to revisit it. Ag
 ### D13 · Gemma runs on the laptop CPU with Ollama · 31 Oct
 **Why:** No GPU is available: the laptop has a 16 GB i7-1185G7 with integrated graphics. Everything is pre-crawled and cached; only the paste-a-URL step runs live.
 **Revisit:** If someone offers GPU credits.
+
+### D14 · Park the generic talent portal; build the demo screens in `web/` · 31 Oct
+**Why:** The draft Copilot PR (`copilot/consolidate-talent-portal`) built a multi-type directory with browser-local storage at the repo root. It skips the API, so none of the four demo screens get built, and talent is out of scope (D1, D7). Reusable parts (cards, filters) move into `web/` and read from the API.
+**Revisit:** Next phase, when funders and opt-in talent are added.
