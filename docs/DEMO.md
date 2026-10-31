@@ -11,21 +11,22 @@ Slides: [pitch deck](https://claude.ai/artifact/5R7KsFVBwNFipqC7NsrDCf) (speaker
 - [ ] Sample deck PDF on the desktop, already tested end to end.
 - [ ] One program URL that isn't in the DB yet, tested once (Bahasa Indonesia, Vietnamese or Khmer).
 - [ ] One source page saved locally with its CSS changed, for the redesign moment.
+- [ ] Gemini API key file set (`LLM_PROVIDER=gemini`, `LLM_API_KEY_FILE`) and quota checked; venue Wi-Fi tested.
 - [ ] API running (`python -m gateway serve`) and the web UI open.
-- [ ] **Fallback:** a screen recording of the whole flow, in case the live model is slow.
+- [ ] **Fallback:** a screen recording of the whole flow, in case the live model is slow or the network drops.
 
 ## Timing plan: start slow model steps early
 
-On a laptop CPU one model call takes minutes (one page: about 81 s with 4B, 208 s with 12B; a deck: [__] s, measure it at rehearsal). The model handles one request at a time, and while a deck is being read the whole API freezes (stats, matches and gap map included). So run the slow steps **in sequence and ahead of time**, never while the audience waits.
+With Gemma 4 31B on the Gemini API one model call still takes about a minute (one page: 43–87 s in the crawl; a deck: [__] s, measure it at rehearsal), and the API sometimes returns HTTP 500, so it depends on the venue network and API quota. The API handles one request at a time, so while a deck is being read the whole API waits (stats, matches and gap map included). So run the slow steps **in sequence and ahead of time**, never while the audience waits.
 
 | When | Who | Do |
 |---|---|---|
 | Setup, ~5 min before the slot | [name] | **Tab 1, Find programs:** upload `demo/sample_deck.pdf`. Wait until the profile and match cards show. **Don't refresh this tab afterwards**: the profile isn't saved anywhere. |
 | Setup | [name] | **Tab 2, Add a program:** paste the BRIN RISE URL. **Don't click Read page yet.** |
 | Setup | [name] | **Tab 3, Gap map:** open it once so it's loaded. Then put the slides on screen. |
-| **0:00**, before the first word | presenter | Click **Read page** in tab 2, then switch to the slides. It finishes by about 1:30 with 4B, ahead of row 8 at 2:15. |
+| **0:00**, before the first word | presenter | Click **Read page** in tab 2, then switch to the slides. At about 90 s per page it finishes ahead of row 8 at 2:15 (confirm at rehearsal). |
 
-- The API (`serve`) must use the **4B** model for the live paste (`LLM_MODEL` in `.env`). 12B takes about 3.5 minutes and won't be ready in time. The crawl can still use 12B beforehand. @reiva5 to confirm.
+- The API (`serve`) uses `gemma-4-31b-it` on the Gemini API (D21). If it's slow or rate-limited at rehearsal, try `gemma-4-26b-a4b-it`. @reiva5 to confirm.
 - Say plainly that the deck was read during setup. Honesty is part of the pitch.
 
 ## Script
@@ -39,7 +40,7 @@ Slides 1–5 must fit in about 65 seconds. Don't read the cards aloud; say the l
 | 3 | 0:35 | Slide 4: why programs first | "They have deadlines and eligibility rules, which is where an open model adds value. They're what founders look for first. And they need no personal data." |
 | 4 | 0:50 | Slide 5: numbers | "We found ___ open programs across ___ ASEAN countries. ___ close in the next 30 days. ___ aren't listed on any aggregator." |
 | 5 | 1:05 | Slide 6: live demo, then the web UI | "Two moments: one for founders, one for Startup ASEAN." Switch to the UI. |
-| 6 | 1:10 | Tab 1: deck result (read during setup) | "A founder drops in their pitch deck. Gemma, an open model, read it while we set up: about [__] on this laptop's CPU." Point out the profile fields and the slide each came from. |
+| 6 | 1:10 | Tab 1: deck result (read during setup) | "A founder drops in their pitch deck. Gemma 4, an open model, read it while we set up: about [__] seconds." Point out the profile fields and the slide each came from. |
 | 7 | 1:45 | Match cards | "Here's what they can apply to, why they qualify, and when it closes. Every card links to the organiser's own page." |
 | 8 | 2:15 | Tab 2: paste result (started at 0:00) | "We pasted a new program page in Bahasa Indonesia when we started talking. Here it is as a structured English record." Point at the "Translated from Bahasa Indonesia" tag and the eligibility list. |
 | 9 | 2:50 | Gap map (UI; slide 7 is the backup) | "This is for Startup ASEAN: where in the region founders have nowhere to apply. Coverage so far, from ___ sources." |
@@ -56,4 +57,4 @@ Slides 10–11 (how it works, responsible by design) are backup for questions.
 - **Tab 1 refreshed by accident:** the profile is gone. Fill in the form with the PadiSense answers (MY, pre-seed, agritech/ai, prefers equity-free) and click Find programs, or play the recording.
 - **Don't press Cancel** on the paste: the server keeps going anyway.
 - **Deck misread:** "Every field is editable, and that's why we show the slide it came from." Fix it live.
-- **Network down:** everything except paste-a-URL works from the local DB.
+- **Network down:** matches and the gap map still work from the local DB (and the deck already read in tab 1). Paste-a-URL and new deck uploads need the Gemini API, so play the recording for those.

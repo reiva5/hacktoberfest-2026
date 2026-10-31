@@ -129,7 +129,7 @@ const PROGRESS_STEPS = [
   [0, "Reading your deck…"],
   [8, "Gemma is looking at each slide…"],
   [40, "Working out your country, stage and sectors…"],
-  [120, "Still reading. Large decks take longer on a laptop CPU…"],
+  [120, "Still reading. Large decks take longer…"],
 ];
 
 async function uploadDeck(file) {
@@ -286,7 +286,7 @@ const INGEST_STEPS = [
   [5, "Cleaning the page text…"],
   [10, "Gemma is reading the page…"],
   [45, "Extracting eligibility, deadline and funding…"],
-  [120, "Still working. Long pages take longer on a laptop CPU…"],
+  [120, "Still working. Long pages take longer…"],
 ];
 let ingestAbort = null;
 
