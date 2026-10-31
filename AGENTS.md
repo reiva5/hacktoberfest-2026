@@ -19,8 +19,9 @@ The pitch line is: aggregate institutions now, invite people later. A working 4-
 
 | Area | Paths | Owner | Usual agent |
 |---|---|---|---|
-| Pipeline and data | `gateway/` (except the contract files), `sources.yaml`, `tests/`, `fixtures/` | @adhibskr | Claude Code |
-| Web UI | `web/` | @reiva5 | GitHub Copilot |
+| Pipeline and data | `gateway/` (except the contract files), `sources.yaml`, `tests/`, `fixtures/` | @reiva5 | GitHub Copilot |
+| Web UI | `web/` | @adhibskr | Claude Code |
+| Pitch, demo and ops | slides, demo inputs, `docs/DEMO.md` | @adhibskr | Claude Code |
 | **Shared contract** | `gateway/schema.py`, `gateway/api.py`, `docs/openapi.json` | both | either; the other person approves the PR |
 | Docs | `docs/`, `AGENTS.md`, `README.md` | both | either |
 

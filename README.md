@@ -54,5 +54,5 @@ Any OpenAI-compatible server works; set `LLM_BASE_URL` and `LLM_MODEL` in `.env`
 
 ## Team
 
-- @adhibskr: product and pipeline (Claude Code)
-- @reiva5: engineering and web UI (GitHub Copilot)
+- @adhibskr: product, business, pitch and web UI (Claude Code)
+- @reiva5: engineering: pipeline, data and API (GitHub Copilot)

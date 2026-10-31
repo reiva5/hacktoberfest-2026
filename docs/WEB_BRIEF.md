@@ -1,6 +1,6 @@
-# Web UI brief (for @reiva5 and Copilot)
+# Web UI brief
 
-Paste this into Copilot as the task. It replaces the talent-portal draft (see [D14](DECISIONS.md)).
+Owner: @adhibskr with Claude Code ([D15](DECISIONS.md)). It replaces the talent-portal draft (see [D14](DECISIONS.md)).
 
 ## Goal
 
