@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: pip
+      - name: Install
+        # Pinned versions: the generated docs/openapi.json depends on the FastAPI and pydantic versions.
+        run: pip install -e ".[api,dev]" -c constraints.txt
+      - name: Tests (offline, model stubbed)
+        run: pytest -q
+      - name: API contract is current
+        run: python -m gateway openapi --check
+      - name: Sample data loads and matches
+        run: |
+          python -m gateway seed-sample
+          python -m gateway match --country MY --stage pre-seed --sector fintech --equity-free
+          python -m gateway gapmap
+        env:
+          GATEWAY_DB: data/ci.db
