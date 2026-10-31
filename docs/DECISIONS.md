@@ -77,3 +77,7 @@ Newest last. Each entry records what we decided, why, and when to revisit it. Ag
 **Revisit:** If API quota or availability prevents a crawl, use a self-hosted Gemma 4 endpoint; do not fall back to Gemini or another model family.
 
 Transient Gemini API HTTP 500/502/503/504 responses are retried once after two seconds with the same model. Persistent failures remain explicit; authentication and quota failures are not retried. The live crawl also tried the other allowed hosted Gemma 4 model for failed sources without changing the default configuration.
+
+### D23 · Team name: Fundbound · 31 Oct
+**Why:** It reads as both "bound for funding" and "bound together across ASEAN", so it fits the pitch without using Startup ASEAN's brand. Shortlisted alternatives were Gapmap, Pintu, Lantern, Wau, Mamak, Scout and Banyan. The product stays "Startup ASEAN Gateway" in the UI, because we are pitching it as their gateway. (Numbered D23 because D22 is taken by #16.)
+**Revisit:** If we want the product itself to carry our name instead.

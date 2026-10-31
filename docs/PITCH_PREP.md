@@ -12,7 +12,7 @@ Owner: @adhibskr. Goes with the [pitch deck](https://claude.ai/artifact/5R7KsFVB
 | **Problem and impact**: real founder pain, real value for the sponsor | Problem slide, gap-map slide | Gap map: where founders have nowhere to apply |
 | **Innovation**: what's new vs. F6S, e27 and other directories | Problem slide (last line) | Match cards with *reasons* and *warnings*, not just a list |
 | **Technical execution**: does it actually work? | Live demo | Deck → profile → matches; non-English page → English record; restyled page still extracts |
-| **Feasibility and scale**: can it grow past a hackathon? | Next-phase slide, backup "How it works" | No per-site scrapers; same pipeline on a laptop or a GPU server |
+| **Feasibility and scale**: can it grow past a hackathon? | Next-phase slide, backup "How it works" | No per-site scrapers; same pipeline on hosted Gemma 4 today or a self-hosted server in a pilot |
 | **Responsibility**: important to a public-sector sponsor | Backup "Responsible by design" | robots.txt respected, no personal data, open model, every card sourced |
 | **Presentation**: clear, on time | Whole pitch | 4 minutes, rehearsed, fallback video ready |
 
@@ -33,13 +33,13 @@ Nothing breaks. We never use CSS selectors; we read the page text and the model 
 Each source is re-crawled and we detect changes. Cards show a "verified on" date and a deadline countdown, and closed programs drop out. In the pilot, organisers claim and update their own listings.
 
 **5. Why an open model? Isn't it slow?**
-The challenge asked for open source, and it matters for a public body: no data leaves your servers and there's no per-call fee. Today it runs on a laptop CPU, which is why we pre-crawl. In a pilot it runs on a hosted GPU, and only one setting changes.
+The challenge asked for open source, and it matters for a public body: the weights are open, so Startup ASEAN can run Gemma 4 on its own servers, with no lock-in and no per-call fee. For today's demo we call Gemma 4 31B through Google's Gemini API, so public page text and the uploaded deck go to Google. In a pilot it moves to a self-hosted Gemma 4 server and nothing leaves Startup ASEAN's infrastructure; only one setting changes. We still pre-crawl, because reading one page takes about a minute.
 
 **6. Is crawling these sites allowed?**
 We only read public program pages, identify ourselves honestly, and follow robots.txt. Four sites said no (e27, F6S, Thailand's NIA, SGInnovate), and we skip them. We never touch LinkedIn or personal profiles.
 
 **7. What happens to an uploaded pitch deck?**
-It's read in a temporary folder and deleted straight away. We keep the profile only in the founder's browser session; nothing is stored on our side.
+It's read in a temporary folder and deleted straight away. We keep the profile only in the founder's browser session; nothing is stored on our side. Today the slides are sent to Gemma 4 on Google's Gemini API to be read; in a pilot, a self-hosted Gemma 4 means the deck never leaves Startup ASEAN's servers.
 
 **8. Why only programs? The brief says talent and partners too.**
 Programs have deadlines and eligibility rules, which is where structured extraction adds the most, and they're what founders search for first. Aggregating institutions solves the cold start. People come later, and only opt-in.

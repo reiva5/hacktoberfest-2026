@@ -21,6 +21,7 @@ Do these roughly in order. The first item unblocks the system work.
 - [ ] **P1** Run `stats` and put the numbers in the pitch.
 - [x] **P1** Stats header showing the four pitch numbers from `/stats`. Implemented in #5.
 - [x] **P1** Paste-a-URL screen with progress for slow model calls (30 s to minutes) and a timeout message. Implemented in #5.
+- [x] **P1** Update pitch prep (Q5, Q7), the demo script and UI progress text for hosted Gemma 4 on the Gemini API (D21). Team name recorded as Fundbound (D23).
 - [ ] **P1** Check the judging criteria and make sure the pitch answers each one. Assumed criteria, mapping and 12 likely questions in [PITCH_PREP.md](PITCH_PREP.md); still need the official rubric from the organisers, plus an answer for "what did you build today" (business model decided: D19).
 - [x] **P2** Plain profile form as a fallback when there's no deck. Implemented in #5.
 
@@ -40,5 +41,6 @@ Do these roughly in order. The first item unblocks the system work.
 
 ## Shared
 
-- [ ] **P0** Rehearse the demo end to end ([DEMO.md](DEMO.md)) and record a fallback video.
+- [ ] **P0** Test the sample deck and the BRIN RISE paste end to end on `gemma-4-31b-it`, and time both for [DEMO.md](DEMO.md) (issue #14).
+- [ ] **P0** Rehearse the demo end to end ([DEMO.md](DEMO.md)) and record a fallback video. The live steps need the Gemini API, so check the venue Wi-Fi and have the video ready if the network drops.
 - [ ] **P1** Share the roadmap page (`gateway-roadmap.html`) with judges if useful.
