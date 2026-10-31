@@ -49,11 +49,26 @@ document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () 
   if (t.dataset.view === "gap") loadGap();
 }));
 
+// ---------- Data banner ----------
+// Say what kind of data is on screen. Sample records are fictional; crawled
+// records haven't been checked by hand yet, so the totals aren't verified coverage.
+function showDataBanner(all) {
+  const el = $("#sample-banner");
+  const samples = all.filter(isSample).length;
+  const crawled = all.length - samples;
+  if (!samples) { el.hidden = true; return; }
+  const n = (k, word) => `${k} ${word}${k === 1 ? "" : "s"}`;
+  el.innerHTML = crawled
+    ? `Showing <b>mixed data</b>: ${n(samples, "fictional sample program")} (marked Sample) and ${n(crawled, "crawled program")} not yet checked by hand. The numbers above count both.`
+    : "Showing <b>sample data</b>: these programs are fictional and only for building the UI.";
+  el.hidden = false;
+}
+
 // ---------- Stats header ----------
 async function loadStats() {
   try {
     const [s, all] = await Promise.all([api("/stats"), api("/programs?open_only=false")]);
-    $("#sample-banner").hidden = !all.some(isSample);
+    showDataBanner(all);
     const tiles = [
       [s.open_programs, "open programs"],
       [s.asean_countries_covered, "ASEAN countries covered"],
