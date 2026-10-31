@@ -7,9 +7,9 @@ Owners follow the areas in [AGENTS.md](../AGENTS.md) (split changed in [D15](DEC
 
 Do these roughly in order. The first item unblocks the system work.
 
-- [ ] **P0** Gather the demo inputs and hand them to @reiva5:
+- [x] **P0** Gather the demo inputs and hand them to @reiva5:
   - [x] 30 checked seed URLs: [SOURCES_PROPOSED.md](SOURCES_PROPOSED.md)
-  - [ ] one sample pitch deck PDF, clearly fictional ("Sample …")
+  - [x] fictional sample pitch deck: [demo/sample_deck.pdf](../demo/sample_deck.pdf), answer key in [demo/README.md](../demo/README.md)
   - [x] non-English demo page (BRIN RISE 2026, Bahasa Indonesia), also in SOURCES_PROPOSED.md
 - [ ] **P0** Scaffold `web/` against sample data (`seed-sample` + `serve`). Read the API URL from an environment variable. Brief: [WEB_BRIEF.md](WEB_BRIEF.md).
 - [ ] **P0** Match card: title, organiser, score, reasons, warnings, deadline countdown, source link, "verified on".
