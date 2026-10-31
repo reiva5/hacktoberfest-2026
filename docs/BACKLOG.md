@@ -40,5 +40,7 @@ Do these roughly in order. The first item unblocks the system work.
 
 ## Shared
 
+- [x] **P0** Merge the selected real crawl into the local sample preview without committing data. HTTP verification on 31 Oct found 27 records: eight preserved samples and 19 historical raw crawl rows. This did not import the separate newer 22-row Gemma 4 dataset or complete the extraction audit; procedure and caveats are in the README.
+- [ ] **P0** Confirm the public preview reaches the merged API and replace sample-only banner wording with accurate mixed-data wording. Preserve individual sample labels; do not present raw crawl rows or combined statistics as verified real coverage.
 - [ ] **P0** Rehearse the demo end to end ([DEMO.md](DEMO.md)) and record a fallback video.
 - [ ] **P1** Share the roadmap page (`gateway-roadmap.html`) with judges if useful.
