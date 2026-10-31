@@ -11,8 +11,9 @@ Slides: [pitch deck](https://claude.ai/artifact/5R7KsFVBwNFipqC7NsrDCf) (speaker
 - [ ] Sample deck PDF on the desktop, already tested end to end.
 - [ ] One program URL that isn't in the DB yet, tested once (Bahasa Indonesia, Vietnamese or Khmer).
 - [ ] One source page saved locally with its CSS changed, for the redesign moment.
+- [ ] Gemini API key file set (`LLM_PROVIDER=gemini`, `LLM_API_KEY_FILE`) and quota checked; venue Wi-Fi tested.
 - [ ] API running (`python -m gateway serve`) and the web UI open.
-- [ ] **Fallback:** a screen recording of the whole flow, in case the live model is slow.
+- [ ] **Fallback:** a screen recording of the whole flow, in case the live model is slow or the network drops.
 
 ## Timing plan: start slow model steps early
 
@@ -37,7 +38,7 @@ Slides 1–6 must fit in about 70 seconds. Don't read the cards aloud; say the l
 |---|---|---|---|
 | 1 | 0:00 | Slides 1–2: cover, problem | "Every ASEAN founder asks: which programs can I apply to? They're spread across government, corporate and VC sites, in five languages, with the rules buried. Directories list programs; none tell you which ones you qualify for." |
 | 2 | 0:20 | Slide 3: scope | "Startup ASEAN asked for one gateway to programs, funding, talent and partners. We build it in order. Today: programs and funding calls." |
-| 3 | 0:30 | Slide 4: why programs first | "They have deadlines and eligibility rules, which is where an open model adds value. And they need no personal data." |
+| 3 | 0:30 | Slide 4: why programs first | "They have deadlines and eligibility rules, which is where an open model adds value. They're what founders look for first. And they need no personal data." |
 | 4 | 0:45 | Slide 5: Gemma 4 | "Gemma 4 does all the reading: pitch decks as images, program pages in any language, and new links. You'll see two of those live." |
 | 5 | 1:00 | Slide 6: numbers | "One day, 15 public sources. Gemma 4 read 22 programs from 7 of them. We have national sources in only four countries so far, which is what the gap map shows." |
 | 6 | 1:10 | Slide 7: live demo, then the web UI | "Two moments: one for founders, one for Startup ASEAN." Switch to the UI. |
@@ -60,4 +61,4 @@ Slides 11–12 (how it works, responsible by design) are backup for questions.
 - **Tab 1 refreshed by accident:** the profile is gone. Fill in the form with the PadiSense answers (MY, pre-seed, agritech/ai, prefers equity-free) and click Find programs, or play the recording.
 - **Don't press Cancel** on the paste: the server keeps going anyway.
 - **Deck misread:** "Every field is editable, and that's why we show the slide it came from." Fix it live.
-- **Network down:** everything except paste-a-URL works from the local DB.
+- **Network down:** matches and the gap map still work from the local DB (and the deck already read in tab 1). Paste-a-URL and new deck uploads need the Gemini API, so play the recording for those.

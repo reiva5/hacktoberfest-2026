@@ -1,0 +1,41 @@
+<section id="gemma" data-transition="fade" style="background:#F3F3F1;color:#111111;font-family:'Manrope', Arial, sans-serif;padding:192px 128px 128px;display:grid;grid-template-columns:760px 1fr;gap:96px;align-items:center">
+<p style="position:absolute;left:128px;top:56px;width:560px;font-size:24px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#111111">● Startup ASEAN Gateway</p>
+<p style="position:absolute;left:880px;top:56px;width:300px;font-size:24px;line-height:1.25;color:#5E5E5B">Hacktoberfest KL<br>31 Oct 2026</p>
+<p style="position:absolute;left:1240px;top:56px;width:320px;font-size:24px;line-height:1.25;color:#5E5E5B">Startup ASEAN<br>challenge pitch</p>
+<p style="position:absolute;left:1672px;top:56px;width:120px;font-size:24px;font-weight:800;text-align:right;color:#111111">2026</p>
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;flex-direction:column;gap:10px;background:radial-gradient(ellipse at 85% 15%, #4A4A4A 0%, #1A1A1A 45%, #0C0C0C 100%);padding:32px 40px;border-radius:28px">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<p style="font-size:24px;color:#A8A8A3">(01)</p>
+<p style="font-size:24px;font-weight:700;color:#111111;background:#EDF233;border-radius:40px;padding:6px 20px">Multimodal</p>
+</div>
+<h3 style="font-size:36px;font-weight:700;color:#F3F3F1">Reads pitch decks</h3>
+<p style="font-size:26px;line-height:1.35;color:#C9C9C5">Slides go in as images. Gemma returns a profile and the slide each field came from.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#EDF233;padding:32px 40px;border-radius:28px">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<p style="font-size:24px;color:#3A3A37">(02)</p>
+<p style="font-size:24px;font-weight:700;color:#EDF233;background:#161616;border-radius:40px;padding:6px 20px">Extraction + translation</p>
+</div>
+<h3 style="font-size:36px;font-weight:700;color:#111111">Reads program pages</h3>
+<p style="font-size:26px;line-height:1.35;color:#2A2A28">Any ASEAN language in; a structured English record out, eligibility included.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#E3E3E0;padding:32px 40px;border-radius:28px">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<p style="font-size:24px;color:#5E5E5B">(03)</p>
+<p style="font-size:24px;font-weight:700;color:#111111;border:2px solid #111111;border-radius:40px;padding:4px 18px">Discovery</p>
+</div>
+<h3 style="font-size:36px;font-weight:700;color:#111111">Finds new sources</h3>
+<p style="font-size:26px;line-height:1.35;color:#3F3F3C">Gemma checks each newly found link: is this a program page?</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:36px">
+<div style="display:flex;gap:12px">
+<p style="font-size:24px;font-weight:600;border:2px solid #111111;border-radius:40px;padding:6px 22px">Where Gemma 4 works</p>
+</div>
+<h2 style="font-size:104px;font-weight:500;letter-spacing:-4px;line-height:0.98;color:#111111">Gemma 4 does the reading</h2>
+<p style="font-size:30px;line-height:1.35;color:#3F3F3C">Three jobs, one open model. Every call returns JSON checked against a fixed schema, so we never parse free text.</p>
+<p style="font-size:24px;line-height:1.35;color:#5E5E5B">Gemma 4 31B through the Gemini API. The same code runs Gemma 4 on your own servers.</p>
+</div>
+<aside>Gemma 4 does all the reading in this product, in three jobs. One: it reads a founder’s pitch deck, with the slides sent as images, and returns a profile that cites the slide each field came from. Two: it reads program pages in any ASEAN language and returns a structured English record, eligibility rules included. Three: it decides whether a newly found link is a program page, which is how the source list grows. We run Gemma 4 31B through the Gemini API; because it’s an open model, the same code can run it on Startup ASEAN’s own servers. Every call returns JSON validated against a fixed schema. You’ll see the first two live in a moment.</aside>
+</section>
