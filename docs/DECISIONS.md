@@ -63,3 +63,7 @@ Newest last. Each entry records what we decided, why, and when to revisit it. Ag
 ### D18 · Authoritative refreshes replace eligibility and funding terms · 31 Oct
 **Why:** A real 4B ingest broadened a Malaysian residence requirement to all ASEAN countries. Unioning country/stage/sector lists on refresh retained stale claims even when a later extraction narrowed eligibility; taking the longer rule list or older funding/deadline also kept stale claims. The organiser's newer copy now owns these fields, while provenance is still merged. Extraction instructions explicitly distinguish applicant location, conditional funding and application dates from surrounding navigation or event dates.
 **Revisit:** If a field-level provenance contract is added so multiple corroborating sources can be reconciled without broadening eligibility.
+
+### D19 · Public good, funded by the sponsor · 31 Oct
+**Why:** A gateway is only trusted if listings and rankings can't be bought, so founders and organisers use it for free and Startup ASEAN funds it. Costs stay low (open model, one GPU server, a curator), and the sponsor's return is ecosystem data and the gap map. Featured listings and a paid API were considered and rejected for now, because they put that neutrality at risk.
+**Revisit:** After the pilot, if Startup ASEAN wants cost recovery, for example a data API for policy teams outside ASEAN bodies.
