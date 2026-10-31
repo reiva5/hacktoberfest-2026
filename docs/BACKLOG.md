@@ -20,7 +20,7 @@ Do these roughly in order. The first item unblocks the system work.
 - [ ] **P1** Run `stats` and put the numbers in the pitch.
 - [x] **P1** Stats header showing the four pitch numbers from `/stats`. Implemented in #5.
 - [x] **P1** Paste-a-URL screen with progress for slow model calls (30 s to minutes) and a timeout message. Implemented in #5.
-- [ ] **P1** Check the judging criteria and make sure the pitch answers each one. Assumed criteria, mapping and 12 likely questions in [PITCH_PREP.md](PITCH_PREP.md); still need the official rubric from the organisers, plus answers for business model and "what did you build today".
+- [ ] **P1** Check the judging criteria and make sure the pitch answers each one. Assumed criteria, mapping and 12 likely questions in [PITCH_PREP.md](PITCH_PREP.md); still need the official rubric from the organisers, plus an answer for "what did you build today" (business model decided: D17).
 - [x] **P2** Plain profile form as a fallback when there's no deck. Implemented in #5.
 
 ## System (pipeline, data, API) · @reiva5 (Copilot)

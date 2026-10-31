@@ -55,3 +55,7 @@ Newest last. Each entry records what we decided, why, and when to revisit it. Ag
 ### D16 · Programme pages, not organisation homepages, are crawl seeds · 31 Oct
 **Why:** Programme directories and detail pages give extraction funding and eligibility context instead of generic organisation descriptions. The reviewed URLs, JavaScript requirements, older cohorts and access limits are recorded in `sources.yaml` and the README. NIC's archived 2024 call is deferred until a current call is found; Techo's linked accelerator sites and F6S return 403 and are not enabled. No crawler or contract changes are needed.
 **Revisit:** Before the real crawl, confirm cohort dates and Devpost listing content, and find accessible current Vietnam and Cambodia programme pages without bypassing blocks.
+
+### D17 · Public good, funded by the sponsor · 31 Oct
+**Why:** A gateway is only trusted if listings and rankings can't be bought, so founders and organisers use it for free and Startup ASEAN funds it. Costs stay low (open model, one GPU server, a curator), and the sponsor's return is ecosystem data and the gap map. Featured listings and a paid API were considered and rejected for now, because they put that neutrality at risk.
+**Revisit:** After the pilot, if Startup ASEAN wants cost recovery, for example a data API for policy teams outside ASEAN bodies.

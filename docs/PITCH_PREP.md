@@ -51,7 +51,7 @@ Partly, and we say so: it's labelled "coverage so far", with the sources named. 
 Discovery already finds candidate pages from seeds; a curator approves them. The next step is 200+ sources, a review queue, and Postgres with embeddings for duplicate detection.
 
 **11. What's the business model?**
-[Decide before the pitch. Options: a public good funded by Startup ASEAN; featured listings for organisers; an API for policy teams.]
+It's a public good, funded by Startup ASEAN. Founders never pay and organisers list for free, because a gateway is only trusted if no one can pay to rank higher. Running costs are small: one open model on a GPU server plus a curator. The return for Startup ASEAN is the gap map, ecosystem data its policy teams can use.
 
 **12. What did you build today?**
 [Be honest: what existed before the event and what was built today.]
