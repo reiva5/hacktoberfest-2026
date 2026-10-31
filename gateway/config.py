@@ -1,3 +1,4 @@
+"""Local configuration; credentials can stay in an external, untracked key file."""
 import os
 from pathlib import Path
 
@@ -18,10 +19,12 @@ def _load_dotenv(path: Path) -> None:
 
 _load_dotenv(ROOT / ".env")
 
+LLM_PROVIDER = os.environ.get("LLM_PROVIDER", "openai")
 LLM_BASE_URL = os.environ.get("LLM_BASE_URL", "http://localhost:11434/v1").rstrip("/")
-LLM_API_KEY = os.environ.get("LLM_API_KEY", "ollama")
-LLM_MODEL = os.environ.get("LLM_MODEL", "gemma3:12b")
-LLM_SMALL_MODEL = os.environ.get("LLM_SMALL_MODEL", "gemma3:4b")
+LLM_API_KEY = os.environ.get("LLM_API_KEY", "" if LLM_PROVIDER == "gemini" else "ollama")
+LLM_API_KEY_FILE = os.environ.get("LLM_API_KEY_FILE", "")
+LLM_MODEL = os.environ.get("LLM_MODEL", "gemma-4-31b-it" if LLM_PROVIDER == "gemini" else "gemma4:e4b")
+LLM_SMALL_MODEL = os.environ.get("LLM_SMALL_MODEL", LLM_MODEL)
 LLM_VISION = os.environ.get("LLM_VISION", "1") == "1"
 LLM_TIMEOUT = float(os.environ.get("LLM_TIMEOUT", "180"))
 

@@ -26,9 +26,10 @@ Do these roughly in order. The first item unblocks the system work.
 ## System (pipeline, data, API) · @reiva5 (Copilot)
 
 - [ ] **P0** Close the talent-portal draft PR (D14). The UI now lives in `web/`, owned by @adhibskr.
-- [ ] **P0** Install Ollama, pull `gemma3:4b` (and `gemma3:12b` if it runs acceptably), run the first real `ingest`, and record the time per page.
+- [x] **P0** Configure Gemma 4 via Gemini API or local Ollama (`gemma4:e4b`), run the first real ingestion, and record the time per page (D17). Hosted `gemma-4-31b-it` persisted MRANTI GAP in 86.8 s and MDEC's two grants in 43.5 s; several other seeds returned API HTTP 500. Spot-check these records before the demo; GAP describes an older cohort.
+- [x] **P0** Add Gemini API integration restricted to Gemma 4, with external key-file loading, offline transport tests and updated agent rules (D17).
 - [x] **P0** Replace homepage seeds in `sources.yaml` with actual programs or apply pages. Reviewed 31 Oct in #4: programme URLs and JavaScript requirements documented; NIC's archived call and blocked Techo links deferred (see README and D16).
-- [ ] **P0** Crawl and cache 30–50 records; make sure `crawl --cached` works offline.
+- [ ] **P0** Crawl and cache 30–50 records; make sure `crawl --cached` works offline. Gemma 4 API runs stored 22 records from seven sources after retrying failed pages with the other allowed Gemma 4 model. Seven sources still report API HTTP 500 or invalid JSON after correction; Devpost returned no programs. HTML and records are local in ignored `data/`; replay of the first three successful cached pages was verified without network/model calls, but re-extraction still needs the model.
 - [ ] **P0** Fix extraction issues found in the spot-check.
 - [ ] **P1** If CPU inference takes over 60 s, make `/ingest` and `/deck` return a job id and add `GET /jobs/{id}` (a `[contract]` PR).
 - [ ] **P1** Test `deck` on the sample deck plus 1–2 real ones; tune the prompt.

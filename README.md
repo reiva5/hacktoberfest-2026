@@ -32,14 +32,28 @@ python -m gateway seed-sample     # fictional sample programs
 python -m gateway serve           # http://localhost:8000/docs
 ```
 
-**Run the real pipeline:** install [Ollama](https://ollama.com), then:
+Start the UI in a second terminal with `python web\serve.py`, then open
+http://localhost:5173. This also works with real crawled data; omit `seed-sample`
+when you want to keep your database free of fictional records.
+
+**Run the real pipeline with hosted Gemma 4:** in your ignored `.env`, set
+`LLM_PROVIDER=gemini`, `LLM_MODEL=gemma-4-31b-it` and
+`LLM_SMALL_MODEL=gemma-4-31b-it`. Set `LLM_API_KEY_FILE` to the absolute path
+of an external UTF-8 file containing only your Google AI Studio key.
+Do not paste the key into commands, logs or Git. The client sends it in an
+authentication header and does not include response bodies in request errors.
 
 ```bash
-ollama pull gemma3:4b             # gemma3:12b gives better extraction if your machine can run it
 python -m playwright install chromium
+python -m gateway ingest https://cradle.com.my/cip-spark/
 python -m gateway crawl
 python -m gateway stats
 ```
+
+For local inference, install [Ollama](https://ollama.com), run `ollama pull gemma4:e4b`,
+and set `LLM_PROVIDER=openai`, `LLM_MODEL=gemma4:e4b`, `LLM_SMALL_MODEL=gemma4:e4b`,
+`LLM_BASE_URL=http://localhost:11434/v1` and `LLM_API_KEY=ollama`.
+Unset `LLM_API_KEY_FILE` when switching to local inference.
 
 All commands are listed in [AGENTS.md](AGENTS.md#commands).
 
@@ -69,12 +83,26 @@ Before model ingestion, start with one detail page:
 
 ## Gemma options
 
-Any OpenAI-compatible server works; set `LLM_BASE_URL` and `LLM_MODEL` in `.env`.
+Only Gemma 4 is allowed, including discovery and deck processing. Older Gemma and
+proprietary models are rejected before a request is sent. Set `LLM_PROVIDER` in
+`.env`; environment variables take precedence.
 
 | Where | Notes |
 |---|---|
-| Ollama on a laptop | 4B runs on CPU. 12B needs about 10 GB of RAM and is slow on CPU; fine for pre-crawling |
-| vLLM or a hosted endpoint | Much faster. Point `LLM_BASE_URL` at it and set `LLM_API_KEY` |
+| Gemini API (`LLM_PROVIDER=gemini`) | `gemma-4-26b-a4b-it` or `gemma-4-31b-it` only. Uses Google's fixed HTTPS endpoint; ignores `LLM_BASE_URL`. Set `LLM_API_KEY_FILE` or `LLM_API_KEY`; file takes precedence |
+| Ollama (`LLM_PROVIDER=openai`) | Gemma 4 E4B is the default local model; larger Gemma 4 variants need more memory |
+| vLLM or another OpenAI-compatible Gemma 4 server | Point `LLM_BASE_URL` at it and set `LLM_API_KEY` or `LLM_API_KEY_FILE`. Use a Gemma 4 model ID |
+
+Gemini requests include the output schema in the system instruction; every result
+is validated with Pydantic, with one correction retry for invalid JSON. API failures,
+blocked responses and truncated output are reported explicitly. Crawled pages and
+their schemas are sent to Google for hosted inference; keys, local configuration,
+SQLite and page caches remain untracked. `crawl --cached` reuses saved page HTML,
+but changed or forced extraction still needs a model connection.
+
+Transient Gemini API HTTP 500/502/503/504 failures are retried once after two
+seconds using the same Gemma 4 model. Persistent failures are reported without
+response bodies or credentials; authentication and quota errors are not retried.
 
 ## Team
 

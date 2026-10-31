@@ -9,7 +9,7 @@ The full instructions for this repo are in [AGENTS.md](../AGENTS.md); read it fi
   - Every program card shows its source link and "verified on" date.
   - Show match `reasons` and `warnings` exactly as the API returns them; don't recompute eligibility.
   - Label the gap map "coverage so far".
-- **Product model:** open-source only (Gemma through `gateway/llm.py`). Never add OpenAI, Anthropic or Gemini APIs to the product.
+- **Product model:** Gemma 4 only through `gateway/llm.py`. Gemini API is allowed only for hosted Gemma 4 (`gemma-4-31b-it` or `gemma-4-26b-a4b-it`), never Gemini models. No OpenAI, Anthropic or other proprietary models. Keep API keys external and out of logs and Git.
 - **Contract changes** (`gateway/schema.py`, `gateway/api.py`) need `python -m gateway openapi` and a `[contract]` PR title; the other owner approves.
 - **Workflow:**
   - Branch as `web/<topic>`, keep PRs small, and make sure CI passes.
