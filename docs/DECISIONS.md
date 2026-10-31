@@ -68,7 +68,11 @@ Newest last. Each entry records what we decided, why, and when to revisit it. Ag
 **Why:** A gateway is only trusted if listings and rankings can't be bought, so founders and organisers use it for free and Startup ASEAN funds it. Costs stay low (open model, one GPU server, a curator), and the sponsor's return is ecosystem data and the gap map. Featured listings and a paid API were considered and rejected for now, because they put that neutrality at risk.
 **Revisit:** After the pilot, if Startup ASEAN wants cost recovery, for example a data API for policy teams outside ASEAN bodies.
 
-### D20 · Allow Gemini API hosting, but restrict all inference to Gemma 4 · 31 Oct
+### D20 · The web UI uses the pitch deck's look · 31 Oct
+**Why:** The demo cuts between slides and the live UI, so they should feel like one product. The UI uses the deck's palette (off-white, near-black, grey cards, one yellow accent) and Manrope. Yellow is used only for backgrounds and highlights, never for text on the light background, so contrast stays readable. Error states keep a red tone because the deck has no colour for them.
+**Revisit:** If the venue has no internet, vendor the Manrope font file instead of loading it from Google Fonts.
+
+### D21 · Allow Gemini API hosting, but restrict all inference to Gemma 4 · 31 Oct
 **Why:** The user authorized Google-hosted Gemma 4 to run the real crawl without local inference delays. This updates D4 and supersedes D13's local-only setup: `gateway/llm.py` supports Gemini API and OpenAI-compatible Gemma 4 servers. Gemini API permits only `gemma-4-26b-a4b-it` and `gemma-4-31b-it`; older Gemma and proprietary models are rejected. Every result still passes Pydantic validation with one correction retry. Credentials stay in an environment variable or an external UTF-8 key file, travel only in authentication headers, and never appear in logged errors or Git. Hosted inference sends cleaned public page text and schemas to Google.
 **Revisit:** If API quota or availability prevents a crawl, use a self-hosted Gemma 4 endpoint; do not fall back to Gemini or another model family.
 

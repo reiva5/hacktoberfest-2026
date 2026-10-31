@@ -117,7 +117,7 @@ def chat_json(system: str, user: str, schema: type[T], *, model: str | None = No
     if retries < 0:
         raise LLMError("retries must be non-negative")
     instruction = system + "\n\nReply with a single JSON object that matches this JSON schema, and nothing else:\n" \
-        + json.dumps(schema.model_json_schema())
+        + json.dumps(schema.model_json_schema(), separators=(",", ":"))
     content: str | list = user
     if images:
         content = [{"type": "text", "text": user}] + [_image_part(i) for i in images]

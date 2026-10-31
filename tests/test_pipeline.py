@@ -67,6 +67,12 @@ def test_aggregator_listing_points_to_organiser(monkeypatch):
     assert p.countries == ["MY"]
 
 
+def test_tidy_removes_spilled_json():
+    spilled = 'Equity-free accelerator for AI startups.  ”, “sector_details”: “artificial intelligence, ai”}, {'
+    assert extract.tidy(spilled) == "Equity-free accelerator for AI startups."
+    assert extract.tidy("A normal sentence, with a comma.") == "A normal sentence, with a comma."
+
+
 def test_non_program_page_yields_nothing(monkeypatch):
     _stub_llm(monkeypatch, PageExtraction(is_program_page=False))
     assert extract.extract(clean(LAYOUT_A, "https://x.com/"), "https://news.example/") == []

@@ -79,6 +79,26 @@ def test_gemini_key_is_header_only_and_result_is_validated(transport, tmp_path, 
     assert capsys.readouterr() == ("", "")
 
 
+@pytest.mark.parametrize("provider", ["gemini", "openai"])
+def test_schema_instruction_stays_compact_for_both_transports(transport, monkeypatch, provider):
+    requests, responses = transport
+    monkeypatch.setattr(config, "LLM_PROVIDER", provider)
+    if provider == "openai":
+        monkeypatch.setattr(config, "LLM_MODEL", "gemma4:e4b")
+        responses.append(httpx.Response(200, json={"choices": [{"message": {"content": '{"count": 2}'}}]}))
+    else:
+        responses.append(httpx.Response(200, json=_reply()))
+
+    assert llm.chat_json("Extract.", "Page.", Answer).count == 2
+    body = json.loads(requests[0].content)
+    instruction = (body["systemInstruction"]["parts"][0]["text"] if provider == "gemini"
+                   else body["messages"][0]["content"])
+    assert instruction == (
+        "Extract.\n\nReply with a single JSON object that matches this JSON schema, and nothing else:\n"
+        + json.dumps(Answer.model_json_schema(), separators=(",", ":"))
+    )
+
+
 def test_gemini_vision_and_small_model_use_same_transport(transport):
     requests, responses = transport
     responses.append(httpx.Response(200, json=_reply()))

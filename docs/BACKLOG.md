@@ -12,6 +12,7 @@ Do these roughly in order. The first item unblocks the system work.
   - [x] fictional sample pitch deck: [demo/sample_deck.pdf](../demo/sample_deck.pdf), answer key in [demo/README.md](../demo/README.md)
   - [x] non-English demo page (BRIN RISE 2026, Bahasa Indonesia), also in SOURCES_PROPOSED.md
 - [x] **P0** Scaffold `web/` against sample data (`seed-sample` + `serve`). Read the API URL from an environment variable. Brief: [WEB_BRIEF.md](WEB_BRIEF.md). Implemented in #5.
+- [x] **P1** Match the web UI to the pitch deck (palette, Manrope, logo). D20.
 - [x] **P0** Match card: title, organiser, score, reasons, warnings, deadline countdown, source link, "verified on". Implemented in #5.
 - [x] **P0** Gap map: country × stage grid with empty cells highlighted, labelled "coverage so far". Implemented in #5.
 - [x] **P0** Deck upload → editable profile (show the slide number for each field) → match list. Implemented in #5; real-deck testing remains below.
@@ -27,8 +28,8 @@ Do these roughly in order. The first item unblocks the system work.
 
 - [ ] **P0** Close the talent-portal draft PR (D14). The UI now lives in `web/`, owned by @adhibskr.
 - [x] **P0** Historical local setup before the Gemma-4-only policy: installed Ollama and ran the first real `ingest`. Real CIP Spark ingestion with `gemma3:4b` took 80.91 s on CPU; a `gemma3:12b` cached-HTML rerun took 207.74 s and corrected the country and equity-free claims, but stage errors remain. This is not current Gemma 4 validation or a claim of audit readiness.
-- [x] **P0** Configure Gemma 4 via Gemini API or local Ollama (`gemma4:e4b`), run the first real ingestion, and record the time per page (D20). Hosted `gemma-4-31b-it` persisted MRANTI GAP in 86.8 s and MDEC's two grants in 43.5 s; several other seeds returned API HTTP 500. Spot-check these records before the demo; GAP describes an older cohort.
-- [x] **P0** Add Gemini API integration restricted to Gemma 4, with external key-file loading, offline transport tests and updated agent rules (D20).
+- [x] **P0** Configure Gemma 4 via Gemini API or local Ollama (`gemma4:e4b`), run the first real ingestion, and record the time per page (D21). Hosted `gemma-4-31b-it` persisted MRANTI GAP in 86.8 s and MDEC's two grants in 43.5 s; several other seeds returned API HTTP 500. Spot-check these records before the demo; GAP describes an older cohort.
+- [x] **P0** Add Gemini API integration restricted to Gemma 4, with external key-file loading, offline transport tests and updated agent rules (D21).
 - [x] **P0** Replace homepage seeds in `sources.yaml` with actual programs or apply pages. Reviewed 31 Oct in #4: programme URLs and JavaScript requirements documented; NIC's archived call and blocked Techo links deferred (see README and D16).
 - [ ] **P0** Crawl and cache 30–50 records; make sure `crawl --cached` works offline. Gemma 4 API runs stored 22 records from seven sources after retrying failed pages with the other allowed Gemma 4 model. Seven sources still report API HTTP 500 or invalid JSON after correction; Devpost returned no programs. HTML and records are local in ignored `data/`; replay of the first three successful cached pages was verified without network/model calls, but re-extraction still needs the model. The earlier local Gemma 3 run was paused at the user's request with 26 public pages cached, 10 seed sources processed and 19 raw rows; its processed subset replays offline and five seeds remain unprocessed. These are separate partial datasets, neither a verified 30–50-record dataset.
 - [ ] **P0** Fix extraction issues found in the spot-check. Cache-only replay, authoritative merges and extraction instructions improved, but stage, equity-unit and programme-versus-benefit errors remain in the partial export.
