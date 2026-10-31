@@ -71,3 +71,9 @@ Newest last. Each entry records what we decided, why, and when to revisit it. Ag
 ### D20 · The web UI uses the pitch deck's look · 31 Oct
 **Why:** The demo cuts between slides and the live UI, so they should feel like one product. The UI uses the deck's palette (off-white, near-black, grey cards, one yellow accent) and Manrope. Yellow is used only for backgrounds and highlights, never for text on the light background, so contrast stays readable. Error states keep a red tone because the deck has no colour for them.
 **Revisit:** If the venue has no internet, vendor the Manrope font file instead of loading it from Google Fonts.
+
+### D21 · Allow Gemini API hosting, but restrict all inference to Gemma 4 · 31 Oct
+**Why:** The user authorized Google-hosted Gemma 4 to run the real crawl without local inference delays. This updates D4 and supersedes D13's local-only setup: `gateway/llm.py` supports Gemini API and OpenAI-compatible Gemma 4 servers. Gemini API permits only `gemma-4-26b-a4b-it` and `gemma-4-31b-it`; older Gemma and proprietary models are rejected. Every result still passes Pydantic validation with one correction retry. Credentials stay in an environment variable or an external UTF-8 key file, travel only in authentication headers, and never appear in logged errors or Git. Hosted inference sends cleaned public page text and schemas to Google.
+**Revisit:** If API quota or availability prevents a crawl, use a self-hosted Gemma 4 endpoint; do not fall back to Gemini or another model family.
+
+Transient Gemini API HTTP 500/502/503/504 responses are retried once after two seconds with the same model. Persistent failures remain explicit; authentication and quota failures are not retried. The live crawl also tried the other allowed hosted Gemma 4 model for failed sources without changing the default configuration.

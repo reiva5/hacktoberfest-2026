@@ -31,7 +31,7 @@ The pitch line is: aggregate institutions now, invite people later. A working 4-
 
 ## Hard rules
 
-1. **The product uses open-source models only.** All model calls go to Gemma through the OpenAI-compatible client in `gateway/llm.py`. Never add OpenAI, Anthropic, Gemini or other proprietary model APIs to the product. Coding agents helping us write code are fine; the product itself is not.
+1. **The product uses Gemma 4 only.** All model calls go through `gateway/llm.py`. Google Gemini API hosting is allowed only for `gemma-4-31b-it` and `gemma-4-26b-a4b-it`; self-hosted Gemma 4 may use the OpenAI-compatible transport. Never call Gemini models, older Gemma models, OpenAI, Anthropic or other proprietary models in the product. Load hosted credentials from an environment variable or an external key file; never print, log or commit them. Coding agents helping us write code are fine; the product itself is not.
 2. **Every model call returns validated JSON.** Use `llm.chat_json(system, user, PydanticModel)`. Don't parse free text from the model.
 3. **No CSS selectors or per-site scrapers.** Content comes from `clean.py` (trafilatura) plus model extraction. That's why redesigns don't break us. If a site is awkward, fix it in `sources.yaml` (a better URL), not in code.
 4. **Crawl politely.** Respect robots.txt and `CRAWL_DELAY`, and keep the honest `USER_AGENT`. Never spoof a browser user agent or work around a block. e27 returns 403, so we skip it.
@@ -53,10 +53,10 @@ python -m venv .venv
 .venv/Scripts/activate                 # macOS/Linux: source .venv/bin/activate
 pip install -e ".[api,vision,render,dev]" -c constraints.txt   # pinned versions, same as CI
 python -m playwright install chromium  # only needed for crawling pages built with JavaScript
-cp .env.example .env                   # then point LLM_BASE_URL / LLM_MODEL at your Gemma server
+cp .env.example .env                   # then configure the Gemma 4 provider and external key file
 ```
 
-Gemma: `ollama pull gemma3:4b` (and `gemma3:12b` if your machine can handle it). See the README for options.
+Gemma 4: use the Gemini API with `LLM_PROVIDER=gemini` and `LLM_API_KEY_FILE` pointing to a local UTF-8 file containing only the key. The API key is sent in a header, never a URL. For local inference, use `LLM_PROVIDER=openai` and `ollama pull gemma4:e4b`. See the README for options.
 
 ## Commands
 
@@ -88,7 +88,7 @@ sources.yaml → fetch → clean → extract (Gemma) → validate → dedupe →
 |---|---|
 | `schema.py` | **The contract.** `ExtractedProgram` (what Gemma fills), `Program` (plus pipeline metadata), `Profile`, `Match` |
 | `config.py` | Settings from env or `.env` |
-| `llm.py` | OpenAI-compatible client; JSON-schema output; one self-correcting retry |
+| `llm.py` | Gemma 4 via Gemini API or OpenAI-compatible server; validated JSON; one self-correcting retry |
 | `fetch.py` | robots.txt, per-host delay, disk cache, Playwright `render()` fallback |
 | `clean.py` | HTML → markdown and links (no selectors) |
 | `extract.py` | Page → `Program[]`; country normalisation; aggregator → organiser canonical URL |
@@ -139,7 +139,7 @@ sources.yaml → fetch → clean → extract (Gemma) → validate → dedupe →
 ## Gotchas
 
 - **Inference on a laptop CPU is slow.** Pre-crawl and use `crawl --cached` and the stored DB for the demo. Only the paste-a-URL moment runs live.
-- Use 4B for discovery's yes/no checks. Use 12B (or larger, if hardware allows) for extraction quality.
+- Gemini API offers Gemma 4 26B A4B and 31B. For local discovery, Gemma 4 E4B is lighter; use a larger Gemma 4 variant for extraction if hardware allows.
 - Startup SG, Vietnam NIC, MDEC, NIA and Antler need the headless browser. It's automatic if Playwright is installed.
 - Seeds that are homepages give poor extraction. Point them at the actual programs page.
 - `data/` is local only. Share a crawl by `export`ing JSON, never by committing the DB.
