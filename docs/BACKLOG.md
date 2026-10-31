@@ -16,7 +16,7 @@ Do these roughly in order. The first item unblocks the system work.
 - [ ] **P0** Gap map: country × stage grid with empty cells highlighted, labelled "coverage so far".
 - [ ] **P0** Deck upload → editable profile (show the slide number for each field) → match list.
 - [ ] **P0** Spot-check 10 crawled records against their source pages (target ≥ 85% of key fields correct). Report misses to @reiva5.
-- [ ] **P1** Pitch slides: problem, numbers, live demo, gap map, next phase.
+- [ ] **P1** Pitch slides: problem, numbers, live demo, gap map, next phase. Draft done ([deck](https://claude.ai/artifact/5R7KsFVBwNFipqC7NsrDCf), private until shared); fill the `[__]` placeholders after the crawl and add a gap-map screenshot.
 - [ ] **P1** Run `stats` and put the numbers in the pitch.
 - [ ] **P1** Stats header showing the four pitch numbers from `/stats`.
 - [ ] **P1** Paste-a-URL screen with progress for slow model calls (30 s to minutes) and a timeout message.
