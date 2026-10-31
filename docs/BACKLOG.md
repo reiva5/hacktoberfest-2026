@@ -8,9 +8,9 @@ Owners follow the areas in [AGENTS.md](../AGENTS.md) (split changed in [D15](DEC
 Do these roughly in order. The first item unblocks the system work.
 
 - [ ] **P0** Gather the demo inputs and hand them to @reiva5:
-  - 30–50 URLs of actual program or apply pages (not homepages) for `sources.yaml`
-  - one sample pitch deck PDF, clearly fictional ("Sample …")
-  - one program page in Bahasa Indonesia, Vietnamese or Khmer that isn't in the DB yet
+  - [x] 30 checked seed URLs: [SOURCES_PROPOSED.md](SOURCES_PROPOSED.md)
+  - [ ] one sample pitch deck PDF, clearly fictional ("Sample …")
+  - [x] non-English demo page (BRIN RISE 2026, Bahasa Indonesia), also in SOURCES_PROPOSED.md
 - [ ] **P0** Scaffold `web/` against sample data (`seed-sample` + `serve`). Read the API URL from an environment variable. Brief: [WEB_BRIEF.md](WEB_BRIEF.md).
 - [ ] **P0** Match card: title, organiser, score, reasons, warnings, deadline countdown, source link, "verified on".
 - [ ] **P0** Gap map: country × stage grid with empty cells highlighted, labelled "coverage so far".
