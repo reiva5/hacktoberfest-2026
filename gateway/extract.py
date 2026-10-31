@@ -1,4 +1,5 @@
 """Page text -> structured program records, using Gemma."""
+import re
 from datetime import date, datetime, timezone
 from urllib.parse import urljoin, urlparse
 
@@ -12,6 +13,7 @@ Rules:
 - Only use facts stated on the page. Never guess amounts, dates or eligibility.
 - Write every text field in English, translating if the page is in another language.
 - If the page lists several programs, return each one separately (at most 25).
+- Perks inside a program (cloud credits, mentorship, demo day) are part of that program, not separate programs.
 - If the page is a news article, blog post, or general homepage with no program details, set is_program_page to false and return no programs.
 - countries: where applicants must be based. Use 'ASEAN' if open across Southeast Asia and 'GLOBAL' if open worldwide.
 - deadline: the application closing date as YYYY-MM-DD. Resolve relative dates using today's date. If the year is missing, assume the next occurrence.
@@ -41,6 +43,14 @@ def normalise_countries(raw: list[str]) -> list[str]:
     return sorted(out)
 
 
+# Small models sometimes run on past the end of a string and spill JSON into it: `text", "key": ...`
+_JSON_SPILL = re.compile(r"""\s*["”]\s*,\s*["“][\w ]+["”]\s*:.*$|\s*["”]?\s*[}\]]\s*,?\s*[{\[].*$""", re.S)
+
+
+def tidy(text: str) -> str:
+    return _JSON_SPILL.sub("", text).strip().rstrip(",;")
+
+
 def domain(url: str | None) -> str:
     host = urlparse(url or "").netloc.lower()
     return host[4:] if host.startswith("www.") else host
@@ -67,6 +77,9 @@ def extract(page: CleanPage, url: str, *, today: date | None = None) -> list[Pro
         canonical = program_url or url
         if is_aggregator(canonical) and organiser_url and not is_aggregator(organiser_url):
             canonical = organiser_url
+        p.summary = tidy(p.summary)
+        p.eligibility = [tidy(e) for e in p.eligibility if tidy(e)]
+        p.sectors = sorted({s.strip().lower() for s in p.sectors if s.strip()})
         programs.append(Program(
             **p.model_dump(exclude={"program_url", "organiser_url", "countries"}),
             program_url=program_url,
