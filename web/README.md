@@ -21,7 +21,6 @@ The API address comes from the `API_BASE` environment variable (default `http://
 | Profile form → matches | `POST /match` | Reasons and warnings are shown exactly as the API returns them. |
 | Match card | — | Type, countries, score, summary, deadline countdown, amount, equity, reasons, warnings, organiser link and "verified on" date. |
 | Gap map | `GET /gapmap` | Country × stage, labelled "coverage so far"; empty cells highlighted. |
-
-Not built yet: the paste-a-URL screen (P1).
+| Add a program (paste a URL) | `POST /ingest` | Same progress, cancel and timeout as the deck. Shows the structured English record, with a "Translated from …" tag for non-English pages. |
 
 All page text comes from crawled sites, so `app.js` escapes it and only allows http(s) links.

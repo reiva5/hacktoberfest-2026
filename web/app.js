@@ -269,4 +269,108 @@ async function loadGap() {
   } catch (e) { showApiError(e); }
 }
 
+// ---------- Add a program (paste a URL) ----------
+const LANGS = {
+  en: "English", id: "Bahasa Indonesia", ms: "Malay", vi: "Vietnamese", th: "Thai", km: "Khmer",
+  lo: "Lao", my: "Burmese", tl: "Filipino", fil: "Filipino", zh: "Chinese",
+};
+const INGEST_STATUS = {
+  ok: ["ok", "Done. Here's the structured record."],
+  unchanged: ["ok", "This page hasn't changed since we last read it."],
+  needs_review: ["warn", "Read, but the number of programs on this page changed a lot. A curator should check it."],
+  not_program: ["warn", "That page doesn't look like a program or funding call."],
+  error: ["error", "We couldn't read that page."],
+};
+const INGEST_STEPS = [
+  [0, "Fetching the page…"],
+  [5, "Cleaning the page text…"],
+  [10, "Gemma is reading the page…"],
+  [45, "Extracting eligibility, deadline and funding…"],
+  [120, "Still working. Long pages take longer on a laptop CPU…"],
+];
+let ingestAbort = null;
+
+function recordCard(p) {
+  const url = safeUrl(p.canonical_url || p.program_url || p.source_url);
+  const lang = p.language && p.language !== "en" ? (LANGS[p.language] || p.language) : "";
+  const cs = p.countries || [];
+  const where = !cs.length || cs.includes("*") ? "Open worldwide" : cs.map((c) => ASEAN[c] || c).join(", ");
+  const deadline = p.deadline
+    ? new Date(p.deadline).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
+    : p.rolling ? "Rolling" : "Not stated";
+  const f = p.funding || {};
+  const funding = [money(f), f.equity_free ? "equity-free" : f.equity_pct ? `${f.equity_pct}% equity` : ""].filter(Boolean).join(", ") || "Not stated";
+  const row = (k, v) => `<div><dt>${k}</dt><dd>${v}</dd></div>`;
+  return `
+  <article class="card">
+    <div class="meta">${esc(TYPES[p.type] || p.type)}${lang ? ` <span class="tag lang">Translated from ${esc(lang)}</span>` : ""}${isSample(p) ? ' <span class="tag sample">Sample</span>' : ""}</div>
+    <h3>${esc(p.title)}</h3>
+    <div class="org">${esc(p.organiser)}</div>
+    ${p.summary ? `<p class="summary">${esc(p.summary.replace(/^SAMPLE DATA\.\s*/i, ""))}</p>` : ""}
+    <dl class="record">
+      ${row("Who can apply", esc(where))}
+      ${row("Stages", esc((p.stages || []).map((s) => STAGES[s] || s).join(", ") || "Not stated"))}
+      ${row("Sectors", esc((p.sectors || []).join(", ") || "Any"))}
+      ${row("Funding", esc(funding))}
+      ${row("Deadline", esc(deadline))}
+    </dl>
+    ${(p.eligibility || []).length ? `<div class="elig"><b>Eligibility</b><ul class="reasons">${p.eligibility.map((e) => `<li>${esc(e)}</li>`).join("")}</ul></div>` : ""}
+    ${(p.issues || []).length ? `<ul class="warnings">${p.issues.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>` : ""}
+    <div class="source">
+      ${url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Organiser's page · ${esc(host(url))} ↗</a>` : "<span>No source link</span>"}
+      <span>Verified ${esc(verifiedOn(p))}</span>
+    </div>
+  </article>`;
+}
+
+function ingestNote(kind, text) {
+  const el = $("#ingest-note");
+  el.className = `note ${kind}`;
+  el.textContent = text;
+  el.hidden = false;
+}
+
+$("#cancel-ingest").addEventListener("click", () => ingestAbort && ingestAbort.abort("cancelled"));
+
+$("#ingest-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const url = $("#ingest-url").value.trim();
+  if (!safeUrl(url)) { ingestNote("error", "Please paste a full http(s) link."); return; }
+  const btn = e.submitter || $("#ingest-form button");
+  btn.disabled = true;
+  $("#ingest-note").hidden = true;
+  $("#ingest-results").innerHTML = "";
+  $("#ingest-progress").hidden = false;
+  const started = Date.now();
+  const timer = setInterval(() => {
+    const s = Math.floor((Date.now() - started) / 1000);
+    $("#ingest-secs").textContent = s;
+    $("#ingest-progress-text").textContent = INGEST_STEPS.filter(([t]) => s >= t).pop()[1];
+  }, 500);
+  ingestAbort = new AbortController();
+  const timeout = setTimeout(() => ingestAbort.abort("timeout"), DECK_TIMEOUT_MS);
+  try {
+    const res = await api("/ingest", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url }), signal: ingestAbort.signal,
+    });
+    const [kind, text] = INGEST_STATUS[res.status] || ["warn", `Status: ${res.status}`];
+    const programs = (res.programs || []).filter(Boolean);
+    const secs = Math.round((Date.now() - started) / 1000);
+    ingestNote(kind, `${text}${programs.length ? ` ${programs.length} program${programs.length === 1 ? "" : "s"} in ${secs} s.` : ""}${res.note ? ` (${res.note})` : ""}`);
+    $("#ingest-results").innerHTML = programs.map(recordCard).join("");
+    if (programs.length) loadStats();
+  } catch (err) {
+    const reason = ingestAbort.signal.reason;
+    if (reason === "timeout") ingestNote("error", "Reading the page took over 10 minutes, so we stopped.");
+    else if (reason === "cancelled") ingestNote("warn", "Cancelled.");
+    else ingestNote("error", `We couldn't read that page (${err.message}).`);
+  } finally {
+    clearTimeout(timeout);
+    clearInterval(timer);
+    $("#ingest-progress").hidden = true;
+    btn.disabled = false;
+  }
+});
+
 loadStats();

@@ -17,6 +17,7 @@
       <nav class="tabs" role="tablist">
         <button class="tab active" data-view="find" role="tab">Find programs</button>
         <button class="tab" data-view="gap" role="tab">Gap map</button>
+        <button class="tab" data-view="add" role="tab">Add a program</button>
       </nav>
     </div>
   </header>
@@ -94,6 +95,27 @@
         <div class="table-scroll"><table id="gap" class="gap"></table></div>
         <p id="gap-summary" class="gap-summary"></p>
       </div>
+    </section>
+    <!-- Add a program (paste a URL) -->
+    <section id="view-add" class="view" hidden>
+      <div class="panel">
+        <h2>Add a program from any page</h2>
+        <p class="muted">Paste a program or funding-call page in any ASEAN language. Gemma reads it and returns a structured record in English. No per-site setup.</p>
+        <form id="ingest-form" class="ingest-form">
+          <input id="ingest-url" type="url" required placeholder="https://… program page in Bahasa, Vietnamese, Thai, Khmer…" aria-label="Program page URL">
+          <button type="submit" class="primary">Read page</button>
+        </form>
+        <div id="ingest-progress" class="progress" hidden>
+          <div class="spinner"></div>
+          <div>
+            <div id="ingest-progress-text">Fetching the page…</div>
+            <div class="muted small"><span id="ingest-secs">0</span> s · this can take 30 s to a few minutes on a laptop</div>
+          </div>
+          <button id="cancel-ingest" class="link" type="button">Cancel</button>
+        </div>
+        <div id="ingest-note" class="note" hidden></div>
+      </div>
+      <div id="ingest-results" class="matches"></div>
     </section>
   </main>
 
