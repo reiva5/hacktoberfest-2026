@@ -43,6 +43,30 @@ python -m gateway stats
 
 All commands are listed in [AGENTS.md](AGENTS.md#commands).
 
+## Seed sources
+
+`sources.yaml` uses programme directories and detail pages instead of organisation homepages.
+The 31 Oct review checked the replacement URLs with the crawler's honest user agent and
+`clean.py`, using the existing Playwright fallback for pages with under 500 characters of
+static text. No model extraction or full crawl was run as part of this review.
+
+- Cradle CIP Spark/Sprint, Antler Singapore, ADB NextFin Asia and Thai NIA financial support
+  provide programme details directly. NIA supplies the non-English seed.
+- MYStartup's founder programmes, Startup SG Tech eligibility, MDEC Digital Content Grant
+  and SGInnovate's public calls require Playwright/Chromium. MDEC links detailed eligibility
+  PDFs; the HTML pipeline does not ingest those PDFs automatically.
+- MRANTI's GAP page still describes its 2025 cohort. A seed is not evidence of an open call:
+  verify dates before the demo, and do not assume support or investor access means cash funding.
+- Vietnam NIC is deferred until a current programme page is found; the verified alternative
+  is an archived 2024 call. Cambodia Techo's linked accelerator sites and F6S return HTTP 403
+  and are not active seeds. This is a discovery gap, not evidence that those countries lack funding.
+- The existing Devpost discovery seed is retained, but its static response contains navigation
+  rather than opportunity details. Confirm actual listing content before relying on it.
+
+Offline seed configuration checks: `python -m pytest -q tests/test_sources.py`.
+Before model ingestion, start with one detail page:
+`python -m gateway ingest https://cradle.com.my/cip-spark/`.
+
 ## Gemma options
 
 Any OpenAI-compatible server works; set `LLM_BASE_URL` and `LLM_MODEL` in `.env`.
