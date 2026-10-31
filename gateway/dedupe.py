@@ -39,13 +39,7 @@ def merge(a: Program, b: Program) -> Program:
     base, other = (b, a) if rank(b) >= rank(a) else (a, b)
     merged = base.model_copy(deep=True)
     merged.seen_on = sorted({*base.seen_on, *other.seen_on, other.source_url} - {merged.canonical_url, ""})
-    merged.countries = sorted({*base.countries, *other.countries}) if "*" not in base.countries else ["*"]
-    merged.sectors = sorted({*base.sectors, *other.sectors})
-    merged.stages = [s for s in ("idea", "pre-seed", "seed", "series-a+") if s in {*base.stages, *other.stages}]
-    if len(other.eligibility) > len(merged.eligibility):
-        merged.eligibility = other.eligibility
-    merged.deadline = merged.deadline or other.deadline
-    merged.funding = merged.funding if merged.funding.amount is not None else other.funding
+    # Eligibility and terms belong to the authoritative copy, not a union of old claims.
     merged.organiser_url = merged.organiser_url or other.organiser_url
     stamps = [t for t in (base.last_verified, other.last_verified) if t]
     merged.last_verified = max(stamps) if stamps else None

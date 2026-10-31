@@ -4,7 +4,7 @@ Two moments carry the demo: the **founder moment** (deck in, matches out) and th
 
 ## Before going on stage
 
-Slides: [pitch deck](https://claude.ai/artifact/5R7KsFVBwNFipqC7NsrDCf) (speaker notes follow this script).
+Slides: [pitch deck](https://claude.ai/artifact/5R7KsFVBwNFipqC7NsrDCf) (speaker notes follow this script). Judges' Q&A and extra pre-stage checks: [PITCH_PREP.md](PITCH_PREP.md).
 
 - [ ] Crawl finished and cached: `python -m gateway crawl --cached` runs without errors.
 - [ ] `python -m gateway stats` numbers copied into the pitch.

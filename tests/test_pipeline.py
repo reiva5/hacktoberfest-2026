@@ -86,6 +86,43 @@ def test_same_program_from_two_places_is_one_record(db, monkeypatch):
     assert "https://e27.co/x" in merged.seen_on
 
 
+def test_authoritative_refresh_removes_stale_eligibility_and_terms(db):
+    old = extract.Program(**_grant(countries=["ASEAN"], stages=["idea", "pre-seed", "seed"]).model_dump(),
+                          canonical_url="https://agency.gov.my/grant", source_url="https://agency.gov.my/grant")
+    old.sectors = ["fintech"]
+    new = old.model_copy(deep=True)
+    new.countries = ["MY"]
+    new.stages = ["idea", "pre-seed"]
+    new.sectors = []
+    new.eligibility = ["Minimum one team member resides in Malaysia"]
+    new.funding = Funding(amount=150000, currency="MYR")
+    new.deadline = None
+    store.upsert_program(db, old)
+    merged, was_new = store.upsert_program(db, new)
+    assert not was_new and len(store.all_programs(db)) == 1
+    assert merged.countries == ["MY"] and merged.stages == ["idea", "pre-seed"]
+    assert merged.sectors == []
+    assert merged.eligibility == new.eligibility
+    assert merged.funding.equity_free is None and merged.deadline is None
+
+
+def test_aggregator_cannot_broaden_authoritative_eligibility(db):
+    own = extract.Program(**_grant(countries=["MY"], stages=["pre-seed"]).model_dump(),
+                          canonical_url="https://agency.gov.my/grant", source_url="https://agency.gov.my/grant")
+    aggregator = own.model_copy(deep=True)
+    aggregator.source_url = "https://e27.co/grant"
+    aggregator.countries = ["*"]
+    aggregator.stages = ["idea", "pre-seed", "seed", "series-a+"]
+    aggregator.sectors = ["healthtech"]
+    aggregator.eligibility = ["Open to everyone", "All stages", "No restrictions"]
+    store.upsert_program(db, own)
+    merged, was_new = store.upsert_program(db, aggregator)
+    assert not was_new
+    assert merged.countries == own.countries and merged.stages == own.stages
+    assert merged.sectors == own.sectors
+    assert merged.eligibility == own.eligibility and "https://e27.co/grant" in merged.seen_on
+
+
 def test_validation_flags_past_deadlines():
     p = extract.Program(**_grant(deadline=TODAY - timedelta(days=3)).model_dump(), canonical_url="u")
     validate.validate(p)
