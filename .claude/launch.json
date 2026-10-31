@@ -1,0 +1,7 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {"name": "api", "runtimeExecutable": ".venv/Scripts/python", "runtimeArgs": ["-m", "gateway", "serve"], "port": 8000},
+    {"name": "web", "runtimeExecutable": ".venv/Scripts/python", "runtimeArgs": ["web/serve.py"], "port": 5173}
+  ]
+}

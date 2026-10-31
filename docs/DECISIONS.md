@@ -45,14 +45,21 @@ Newest last. Each entry records what we decided, why, and when to revisit it. Ag
 **Why:** No GPU is available: the laptop has a 16 GB i7-1185G7 with integrated graphics. Everything is pre-crawled and cached; only the paste-a-URL step runs live.
 **Revisit:** If someone offers GPU credits.
 
-### D14 · Programme pages, not organisation homepages, are crawl seeds · 31 Oct
+### D14 · Park the generic talent portal; build the demo screens in `web/` · 31 Oct
+**Why:** The draft Copilot PR (`copilot/consolidate-talent-portal`) built a multi-type directory with browser-local storage at the repo root. It skips the API, so none of the four demo screens get built, and talent is out of scope (D1, D7). Reusable parts (cards, filters) move into `web/` and read from the API.
+**Revisit:** Next phase, when funders and opt-in talent are added.
+
+### D15 · New split: business, ops and UI vs. system · 31 Oct
+**Why:** @adhibskr takes the pitch, demo inputs, data spot-checks and the web UI (`web/`, Claude Code). @reiva5 takes the pipeline, data and API (`gateway/`, Copilot). The API contract stays the boundary (D12); if the UI needs a field, ask in an issue or a `[contract]` PR.
+
+### D16 · Programme pages, not organisation homepages, are crawl seeds · 31 Oct
 **Why:** Programme directories and detail pages give extraction funding and eligibility context instead of generic organisation descriptions. The reviewed URLs, JavaScript requirements, older cohorts and access limits are recorded in `sources.yaml` and the README. NIC's archived 2024 call is deferred until a current call is found; Techo's linked accelerator sites and F6S return 403 and are not enabled. No crawler or contract changes are needed.
 **Revisit:** Before the real crawl, confirm cohort dates and Devpost listing content, and find accessible current Vietnam and Cambodia programme pages without bypassing blocks.
 
-### D15 · Cached fetching never falls back to the network · 31 Oct
+### D17 · Cached fetching never falls back to the network · 31 Oct
 **Why:** The P0 offline-demo check found that `--cached` fetched live pages on a cache miss. Cache misses and corrupt metadata now fail explicitly; CLI crawl/ingest propagate failures through their exit status. Cache metadata preserves redirected source identity and the original fetch time. An unchanged crawl with the same DB/cache skips Gemma, but force or first-time extraction still requires a model.
 **Revisit:** If we need a separate offline extraction-result bundle rather than replaying the local DB/cache.
 
-### D16 · Authoritative refreshes replace eligibility and funding terms · 31 Oct
-**Why:** A real 4B ingest broadened a Malaysian residence requirement to all ASEAN countries. Unioning country/stage lists on refresh retained that error even when a later extraction narrowed eligibility; taking the longer rule list or older funding/deadline also kept stale claims. The organiser's newer copy now owns these fields, while provenance is still merged. Extraction instructions explicitly distinguish applicant location, conditional funding and application dates from surrounding navigation or event dates.
+### D18 · Authoritative refreshes replace eligibility and funding terms · 31 Oct
+**Why:** A real 4B ingest broadened a Malaysian residence requirement to all ASEAN countries. Unioning country/stage/sector lists on refresh retained stale claims even when a later extraction narrowed eligibility; taking the longer rule list or older funding/deadline also kept stale claims. The organiser's newer copy now owns these fields, while provenance is still merged. Extraction instructions explicitly distinguish applicant location, conditional funding and application dates from surrounding navigation or event dates.
 **Revisit:** If a field-level provenance contract is added so multiple corroborating sources can be reconciled without broadening eligibility.

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Startup ASEAN Gateway</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-row">
+      <div>
+        <div class="brand">Startup ASEAN <span>Gateway</span></div>
+        <div class="tagline">Programs and funding calls across ASEAN, matched to your startup</div>
+      </div>
+      <nav class="tabs" role="tablist">
+        <button class="tab active" data-view="find" role="tab">Find programs</button>
+        <button class="tab" data-view="gap" role="tab">Gap map</button>
+        <button class="tab" data-view="add" role="tab">Add a program</button>
+      </nav>
+    </div>
+  </header>
+
+  <div id="sample-banner" class="banner" hidden>Showing <b>sample data</b>: these programs are fictional and only for building the UI.</div>
+  <div id="api-error" class="banner error" hidden></div>
+
+  <main class="wrap">
+    <section id="stats" class="stats" aria-label="Key numbers"></section>
+
+    <!-- Find programs -->
+    <section id="view-find" class="view">
+      <div class="find-grid">
+        <aside class="panel">
+          <h2>1. Your startup</h2>
+          <label id="drop" class="drop">
+            <input id="deck-input" type="file" accept="application/pdf" hidden>
+            <div class="drop-title">Drop your pitch deck (PDF)</div>
+            <div class="drop-sub">Gemma, an open model, reads the slides and fills in your profile.</div>
+          </label>
+          <div id="deck-progress" class="progress" hidden>
+            <div class="spinner"></div>
+            <div>
+              <div id="progress-text">Reading your deck…</div>
+              <div class="muted small"><span id="progress-secs">0</span> s · this can take 30 s to a few minutes on a laptop</div>
+            </div>
+            <button id="cancel-deck" class="link">Cancel</button>
+          </div>
+          <div id="deck-error" class="note error" hidden></div>
+          <div class="or"><span>or</span></div>
+          <button id="use-sample" class="secondary">Fill in the form myself</button>
+
+          <form id="profile" class="profile" hidden>
+            <p class="muted small" id="profile-hint">Check each field. The tag shows which slide it came from.</p>
+            <div class="field"><label for="f-company">Company</label><span class="ev" data-ev="company"></span>
+              <input id="f-company" name="company"></div>
+            <div class="field"><label for="f-country">Country</label><span class="ev" data-ev="country"></span>
+              <select id="f-country" name="country"></select></div>
+            <div class="field"><label for="f-stage">Stage</label><span class="ev" data-ev="stage"></span>
+              <select id="f-stage" name="stage">
+                <option value="idea">Idea</option><option value="pre-seed">Pre-seed</option>
+                <option value="seed">Seed</option><option value="series-a+">Series A+</option>
+              </select></div>
+            <div class="field"><label for="f-sectors">Sectors</label><span class="ev" data-ev="sectors"></span>
+              <input id="f-sectors" name="sectors" placeholder="e.g. agritech, ai"></div>
+            <div class="field"><label for="f-nat">Founder nationalities</label><span class="ev" data-ev="founder_nationalities"></span>
+              <input id="f-nat" name="founder_nationalities" placeholder="e.g. MY, ID"></div>
+            <div class="field check"><label><input type="checkbox" id="f-equity" name="wants_equity_free"> Prefers equity-free funding</label><span class="ev" data-ev="wants_equity_free"></span></div>
+            <fieldset class="field"><legend>Looking for</legend><span class="ev" data-ev="looking_for"></span>
+              <div id="f-looking" class="chips"></div></fieldset>
+            <button type="submit" class="primary">Find programs</button>
+          </form>
+        </aside>
+
+        <div>
+          <div class="list-head">
+            <h2>2. Programs you can apply to</h2>
+            <span id="match-count" class="muted"></span>
+          </div>
+          <div id="matches" class="matches">
+            <div class="empty">Upload a deck or fill in the form to see programs you qualify for, with the reasons.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gap map -->
+    <section id="view-gap" class="view" hidden>
+      <div class="panel">
+        <div class="list-head">
+          <h2>Gap map · coverage so far</h2>
+          <div class="legend"><span class="sw zero"></span> none found yet <span class="sw low"></span> 1–2 <span class="sw mid"></span> 3–5 <span class="sw high"></span> 6+</div>
+        </div>
+        <p class="muted">Open programs a founder can apply to, by country and stage. An empty cell means we haven't found a program there <b>yet</b> in the sources crawled so far, not that none exist.</p>
+        <div class="table-scroll"><table id="gap" class="gap"></table></div>
+        <p id="gap-summary" class="gap-summary"></p>
+      </div>
+    </section>
+    <!-- Add a program (paste a URL) -->
+    <section id="view-add" class="view" hidden>
+      <div class="panel">
+        <h2>Add a program from any page</h2>
+        <p class="muted">Paste a program or funding-call page in any ASEAN language. Gemma reads it and returns a structured record in English. No per-site setup.</p>
+        <form id="ingest-form" class="ingest-form">
+          <input id="ingest-url" type="url" required placeholder="https://… program page in Bahasa, Vietnamese, Thai, Khmer…" aria-label="Program page URL">
+          <button type="submit" class="primary">Read page</button>
+        </form>
+        <div id="ingest-progress" class="progress" hidden>
+          <div class="spinner"></div>
+          <div>
+            <div id="ingest-progress-text">Fetching the page…</div>
+            <div class="muted small"><span id="ingest-secs">0</span> s · this can take 30 s to a few minutes on a laptop</div>
+          </div>
+          <button id="cancel-ingest" class="link" type="button">Cancel</button>
+        </div>
+        <div id="ingest-note" class="note" hidden></div>
+      </div>
+      <div id="ingest-results" class="matches"></div>
+    </section>
+  </main>
+
+  <footer class="wrap foot muted small">
+    Every program links to the organiser's own page. Built with Gemma, an open model.
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
